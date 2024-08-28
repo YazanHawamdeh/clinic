@@ -145,7 +145,8 @@ left: 430px;
     position: relative;
     left: 130px;
 margin-right: 20px;
-    width: 35%; /* Ensure images fit within their containers */
+    width: 35%;
+    height: 100%; /* Ensure images fit within their containers */
     margin-bottom: 20px; /* Space between images */
   }
 
@@ -153,7 +154,8 @@ margin-right: 20px;
     position: relative;
     top: -400px;
     right: 300px;
-    width: 750px;
+    width: 80%;
+    height: 100%;
     
    
   }
@@ -268,6 +270,7 @@ margin-right: 20px;
     position: relative;
     left: 50px;
     max-width: 80%;
+    height: 100%;
    
   }
   
@@ -363,6 +366,7 @@ margin-right: 20px;
     margin-left: -20px;
     top: -15px;
     width: 81.8%;
+    height: 100%;
     
    
   }
