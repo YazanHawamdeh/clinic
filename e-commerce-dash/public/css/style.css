@@ -1,0 +1,551 @@
+@font-face {
+    font-family: 'poppins';
+    src:url('assets/fonts/Poppins-Bold.ttf');
+    font-weight: 700;
+
+}
+
+body{
+   font-family: 'poppins', sans-serif;
+   background-color: #F5F5F5;
+
+}
+/* ========================================================================== login section  */
+
+
+.BoxLogin{
+    font-weight: 700;
+}
+.BoxLoginLabel{
+    font-weight: 700;
+}
+.cardBox{
+    padding-left: 0px !important;
+    width: 20rem !important;
+}
+.btnLogin{
+    background-color: black !important;
+    color: white !important;
+    border-radius: 9px !important;
+    padding: 10px 0px !important;
+}
+
+.btnNewClient{
+    background-color: black !important;
+    color: yellow !important;
+    border-radius: 5px !important;
+}
+.loginPage{
+    background-image: url('assets/img/login.png') ;
+}
+
+.cardLogin{
+    width: 35rem !important ;
+    background-color: white;
+}
+
+.inputLogin{
+    color: #F5F5F5;
+    background-color: #F5F5F5 !important;
+    border-radius: 11px !important;
+    border: none !important;
+    padding: 13px !important;
+}
+/* ========================================================================== side bar section  */
+     /* Custom styles for the sidebar */
+        .sidebar {
+            background-color: #000; /* Black background */
+            padding: 20px;
+            /* height: auto; */
+            /* width: 100%; */
+        }
+        .sidebar .nav-link {
+            color: #fff; /* White text color */
+        }
+        .sidebar .nav-link:hover {
+            color: #676767; /* Light grey text on hover */
+        }
+        @media (min-width: 992px) {
+            .sidebar {
+                height: auto; /* Full height on large screens */
+            }
+        }
+        .header {
+            /* background-color: #f8f9fa; */
+            padding: 10px 0px;
+        }
+        .search-input {
+            position: relative;
+            filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.16 ));
+
+        }
+        .search-input input[type="text"] {
+            padding-left: 40px;
+            border-radius: 20px;
+        }
+        .search-input .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .search-placeholder::placeholder {
+            font-size: 12px !important;
+            color: #aaa !important /* Change this value to your desired font size */
+        }
+/* ========================================================================== card client  section  */
+
+
+
+/* ========================================================================== sidebar content  */
+
+
+.nameTitle{
+    font-size: 2.5rem;
+}
+
+.pTitle{
+font-size: 1rem;
+}
+
+.linkSidebar{
+    padding: 5px 10px;
+    width: 20rem;
+    cursor: pointer;
+}
+
+.linkSidebar:hover{
+background-color: #676767;
+border-radius: 30px;
+width: 100%;
+width: 20rem;
+
+}
+
+.sticky-bottom-section {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    background-color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.logout:hover{
+    background-color: #676767;
+padding: 10px 0px;}
+
+.logout{
+padding: 10px 0px;}
+
+/* ==========================================================================end sidebar content   */
+
+
+
+/* ==========================================================================resturent card   */
+
+ .cardImg{
+    margin-top: 7px;
+    padding: 10px;
+    /* width: 50%;
+    height: 50% !important; */
+    border-radius: 50%;
+ }       
+
+
+ .cardClient{
+border-radius: 9px !important;
+/* height: 100%; */
+}
+
+ .pDate{
+    color: #aaa;
+    font-size: 12px;
+ }
+
+ .iconImgCard{
+    border-radius: 50%;
+    margin: 10px;
+ }
+
+ .numCard{
+    margin: 0%;
+ }
+
+ .pCardIcon{
+    font-size: 9px;
+    color: #545151;
+ }
+
+ .btnViewDetails{
+    width: 100%;
+    background-color: #000 !important;
+    color: white !important;
+    border-radius: 9px !important;
+ }
+ .btn1{
+    background-color: #000 !important;
+    color: white !important;
+    border-radius: 9px !important;
+    width: 47% !important;
+ }
+
+
+
+
+ .upload-box-careem {
+    height: 7rem;
+    width: 100%;
+    background-color: #DEF4E1;
+    border-radius: 8px;
+    padding: 20px 20px 0px 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.upload-box-careem-complete{
+    height: 7rem;
+    width: 100%;
+    background-color: #3BB44E;
+    border-radius: 8px;
+    padding: 10px 20px 0px 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.upload-box-talabat-complete{
+    height: 7rem;
+    width: 100%;
+    color: #FB8E53;
+    background-color: #F4E3DB;
+    border-radius: 8px;
+    padding: 10px 20px 0px 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.upload-box-talabat{
+    width: 100%;
+    background-color: #F4E3DB;
+    border-radius: 8px;
+    padding: 20px 20px 0px 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.branchLabel{
+    font-size: 12px !important;
+}
+
+.upload-icon {
+    font-size: 1rem;
+    color: #007bff;
+    /* margin-bottom: 10px; */
+}
+.uploadIcon{
+    cursor: pointer;
+}
+.modal-footer{
+    border: none !important;
+}
+
+.upload-text {
+    margin-top: 7px;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.upload-text-date{
+    /* margin-top: 7px; */
+    font-size: 0.9rem;
+    color: #333;
+}
+.d-none {
+    display: none;
+}
+
+
+.line{
+    margin-top: 20px;
+    border-bottom: 0.5px solid white;
+    width: 100%;
+}
+
+
+
+.btnlogOut{
+    background-color: none;
+    color: white;
+padding: 10px !important;
+}
+
+.btnlogOut:focus{
+    color: white !important;
+}
+.btnlogOut:hover{
+    color: white !important;
+}
+.lineVertical{
+    border-right: 1px solid white;
+    /* height: 100%; */
+}
+
+
+.btnModal{
+    width: 100% !important;
+}
+
+.modalClientAdd{
+width: 30rem !important;
+}
+
+.linkmadal{
+    color: white;
+    font-size: 1rem;
+}
+
+.upload-box{
+    background-color: #EFEFEF;
+    width: 35%;
+    text-align: center;
+}
+
+
+/* ========================================================================== modals */
+.modalHeaderp{
+    color: #545151;
+    font-size: 13px;
+}
+.modalHeader{
+    color: black !important;
+}
+.modalInput{
+background-color: #F5F5F5;
+padding: 10px 0px;
+border-radius: 11px;
+
+}
+.createInputSelect{
+    background-color: white;
+padding: 10px 13px;
+border-radius: 11px;
+color: #868686;
+
+}
+
+.modalInput::placeholder{
+    padding: 12px;
+    color: #868686;
+    font-size: 13px;
+}
+.addBtn{
+    border-radius: 11px;
+    background: #000000;
+    padding: 11px 0px;
+    color: white;
+}
+.addBtn:hover{
+    background: #000000;
+}
+.backBtn:hover{
+    background: #B92929;
+}
+.backBtn{
+    border-radius: 11px;
+    background: #B92929;
+    padding: 11px 0px;
+    color: white;
+}
+
+
+/* ==========================================================================map modal */
+
+
+.map-box {
+    height: 130px; /* Adjust height as needed */
+    margin: 15px
+  }
+  
+  .map-card {
+      filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.16 ));
+  }
+  
+  .card-header {
+      color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa; /* Background color for header */
+    border-bottom: 1px solid #000; /* Border for header */
+  }
+  
+  .card-header .close {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
+/* ==========================================================================end modals */
+.pDetails{
+    font-size: 15px !important;
+}
+
+.cardinsidecard{
+    border: 0.5px solid #E9E9E9;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.p-card{
+    /* padding-top: 10px; */
+    line-height: 1.2;
+    font-size: 12px;
+    color: #A0A0A0;
+}
+.priceCard{
+    font-weight: 700;
+    font-family: 'poppins', sans-serif;
+
+}
+.p-address{
+    font-size: 12px;
+}
+
+/* ======================================================== scroll */
+
+.card-scrollable-wrapper {
+    overflow: hidden; /* Hide scrollbar */
+    position: relative; /* Required for positioning */
+}
+
+.card-scrollable {
+    overflow-y: scroll; /* Enable vertical scrolling */
+    height:30rem; /* Set height as needed */
+    position: absolute; /* Ensure correct positioning */
+    width: 100%;
+    background-color: white !important;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+
+}
+
+.card-scrollable::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.card-scrollable {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.cardScroll{
+    background-color: white !important;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+
+}
+@media (max-width: 767px) {
+    .hScroll {
+        height: 580px !important; 
+        padding: 20px;
+    }
+}
+/* ======================================================== form create */
+
+.p-create{
+color: #767676;
+}
+
+.head-create{
+    font-weight: 700 !important;
+}
+.horizatalLine{
+
+    border-bottom: 0.5px solid rgb(10, 9, 9);
+    width: 54%;
+}
+.createInput{
+    background-color: white;
+    padding: 10px 0px;
+    border-radius: 11px;
+    
+    }
+.createInput::placeholder{
+    padding:0px 12px;
+    color: #868686;
+    font-size: 13px;
+}
+.startDate{
+    background-color: white;
+    padding: 10px 10px;
+    border-radius: 11px;
+    color: #868686;
+
+}
+
+.btnSubmit{
+    background-color: black;
+    color: white;
+}
+
+.selectInput{
+    background-color: white;
+    border-radius: 11px;
+}
+
+.choices__inner{
+    background-color: white !important;
+    border-radius: 11px !important;
+
+}
+.choices__input::placeholder{
+    padding: 12px;
+    color: #868686 !important;
+    font-size: 14px;
+    background-color: white;
+}
+
+/* ==========================================================User Dashboard */
+
+.card-img-top {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 5px auto;
+}
+
+.btnDelete{
+    width: 100%;
+    margin-top: 10px;
+    background-color: #B92929;
+    border-radius: 15px;
+    color: white;
+    padding: 12px;
+    border: none;
+}
+
+.btnUpdate{
+    width: 100%;
+    margin-top: 10px;
+    background-color: #080707;
+    border-radius: 15px;
+    color: white;
+    padding: 12px;
+    border: none;
+
+}
+
+.pDateProfile{
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 0px !important;
+ }
+ .pNum{
+    font-size: 0.9rem;
+ }

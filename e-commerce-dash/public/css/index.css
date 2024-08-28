@@ -1,0 +1,644 @@
+@font-face{font-family:'Poppins';src:url('../webfonts/Poppins-Bold.ttf')}
+@font-face{font-family:'Poppins2';src:url('../webfonts/Poppins-Medium.ttf')}
+
+
+body {
+  font-family: "Poppins";
+  background-color: #F5F5F5;
+}
+
+
+.teckitType1{
+  font-size: 15px;
+  background-color: #EEEEEE;
+  color: #888888;
+  border-radius: 10px;
+}
+
+.TicketTitle{
+  font-size: 32px;
+  color:#384554 ;
+  font-weight: bold;
+}
+
+.dateSpan{
+  color: #384554;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.closeMenuBtn{
+  color:white;
+  width: 50px;
+  height: 50px;
+  background-color: #002B3E;
+  font-size: 30px;
+  border: none;
+}
+
+.teckitImgProfile{
+
+   width: 46px;
+   height: 47px;
+   border-radius: 11px;
+
+}
+.btnPinding{
+
+  background-color: #F2C060;
+  border: none;
+  border-radius: 10px;
+  width: 122px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.timeSpan{
+
+  color: #384554;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.helloJehad{
+  font-size: 19px;
+  font-weight: 500;
+  color: #6d6d6d;
+  margin-left: 10px;
+
+}
+
+.img1{
+  width: 86px;
+  height: 86px;
+  border-radius: 11px;
+}
+
+.p-profile{
+  color: #C5C5C5;
+}
+.info{
+  color: var(--dark-color);
+}
+
+.p-calinder{
+  color: #BBBBBB;
+  position: absolute;
+  bottom: 0px;
+  font-size: 30px;
+}
+
+.card-head{
+  filter: drop-shadow(0px 6px 3px rgba(0,0,0,0.16 )) ;
+  border-radius: 20px;
+  height: 210px;
+
+}
+.fileImg{
+  width: 90px;
+  height: 100px;
+  position: absolute;
+  right: 10px;
+  bottom: -17px;
+}
+
+
+.uplodFont{
+  font-family: "Poppins2";
+}
+.tecket-card2,.tecket-card{
+  cursor: pointer !important;
+}
+
+@media (max-width:600px) {
+
+  form{
+      margin-left: 50%;
+    }
+
+  .btn-ticket{
+      font-size: 14px !important;
+    }
+  .btn2{
+    margin-top: 10px;
+  }
+  .p-name{
+    font-size: 2rem;
+  }
+
+  
+}
+
+
+@media (max-width:360px) {
+  .btn-ticket{
+    width: 130px !important;
+  }
+
+  .bold{
+    font-size: 17px !important;
+  }
+
+  .pro1{
+    align-items: start !important;
+   }
+  
+  .pp{
+    display: block !important;
+  }
+
+  .nameMain{
+    font-size: 20px !important;
+  }
+  .imgT{
+    height: 90px !important;
+    width: 90px !important;
+  }
+  .solBtn{
+    height: 60px !important;
+    width: 90px !important;
+  }
+  .profileImg{
+    width: 90px !important;
+    height: 90px;
+  }
+  .ahmad{
+    font-size: 20px !important;
+  }
+  .headerNav{
+    display: grid !important;
+    grid-template-columns: 100% !important;
+  }
+  .btn-ticket{
+    margin-bottom: 10px;
+  }
+  .w3-button{
+    margin-bottom: 5px;
+  }
+  .w3-sidebar{
+    width: 100% !important;
+  }
+  .days1 li::before{
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .weeks li{
+    font-size: 14px !important;
+  }
+}
+
+
+@media (max-width:1200px) {
+
+  .side{
+    display: none ;
+   }
+   .ticketType{
+    font-size: 12px !important;
+   }
+  
+}
+
+@media (min-width:1200px) {
+
+  .menu-calender{
+    display: none;
+  }
+  .fileImg{
+    right: 10px;
+  }
+
+  .calendar{
+    width: 400px;
+  }
+  .wrapper {
+    margin-left: 30px }
+
+  .CompletedTec{
+    margin-top: 20px;
+  }
+  
+}  
+
+
+@media (min-width:700px) {
+  .p-name{
+    font-size: 2rem;
+  }
+}
+.tecket-title{
+  border-left: 7px solid  #F2C060;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 10px;
+}
+
+.tecket-title1{
+  border-left: 7px solid  #8CDD95;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 10px;
+}
+
+.tecket-title2{
+  border-left: 7px solid  #B481E6;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 10px;
+}
+.tecket-title3{
+  border-left: 7px solid  #F2E160;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 10px;
+}
+
+.redLine{
+  border-left: 7px solid  #E68282;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  margin-right: 10px;
+}
+.tecket-card{
+
+  height: auto;
+  border-radius: 20px;
+  filter: drop-shadow(0px 8px 3px rgba(0,0,0,0.16 ));
+}
+
+.tecket-card2{
+  min-height: 230px; 
+  height: auto;
+  border-radius: 20px;
+  filter: drop-shadow(0px 8px 3px rgba(0,0,0,0.16 ));
+
+}
+.tecket-card3{
+  border-radius: 20px;
+  filter: drop-shadow(0px 8px 3px rgba(0,0,0,0.16 ));
+}
+.card-title-header{
+  font-size: 21px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #000000;
+  margin-top: 10px;
+  margin-right: 7px;
+}
+
+.leftIcon{
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+/* calender css */
+
+
+.wrapper{
+  color: white;
+  background: #002B3E;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+.wrapper header{
+  display: flex;
+  align-items: center;
+  padding: 25px 30px 10px;
+  justify-content: space-between;
+}
+header .icons{
+  display: flex;
+}
+header .icons span{
+  height: 38px;
+  width: 38px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  text-align: center;
+  line-height: 38px;
+  font-size: 1.9rem;
+  user-select: none;
+  border-radius: 50%;
+}
+.icons span:last-child{
+  margin-right: -10px;
+}
+header .icons span:hover{
+  background: #f2f2f2;
+}
+header .current-date{
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+.calendar{
+  padding: 10px;
+}
+.calendar ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+}
+.calendar .days{
+  margin-bottom: 20px;
+  padding-left: 0px;
+
+  
+}
+.weeks{
+  padding-left: 0px;
+
+}
+.calendar li{
+  color: #333;
+  width: calc(100% / 7);
+  font-size: 1.07rem;
+}
+.calendar .weeks li{
+  font-weight: 500;
+  cursor: default;
+  color: white;
+}
+.calendar .days li{
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 20px;
+
+}
+.days li.inactive{
+  color: #aaa;
+}
+.days li.active{
+  color: #fff;
+}
+.days li::before{
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  background-color: #D0D7D9;
+}
+.days li.active::before{
+  background: #9B59B6;
+}
+.days li:not(.active):hover::before{
+  background: #f2f2f2;
+}
+.days .inactive::before{
+  background: #f8f6f6;
+  color: white;
+}
+
+
+/* calender end */
+
+
+
+.side .sidebar{
+  background: #002B3E;
+  min-height: 100vh;
+  width: auto;
+  height: 100%;
+  padding: 20px 0;
+  padding-right: 20px;
+  transition: all 0.5s ease;
+  position: fixed;
+  right: 0px;
+  overflow: hidden;
+}
+.side{
+  padding-right: 0px;
+}
+
+
+.notify{
+  border-radius: 20px;
+filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+}
+
+.buttonReject{
+  width: 210px !important;
+  height: 56px !important;
+  border-radius : 11px !important;
+}
+.btnClose{
+  background-color: #000000 !important;
+  width: 210px !important;
+  height: 56px !important;
+  border-radius : 11px !important;
+
+}
+
+
+/* ////////////////////////////////////////////////////////////////////////// */
+/* css for the sidebar collapse */
+
+.wrapper1{
+  color: white;
+  background: #002B3E;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+.wrapper1 header{
+  display: flex;
+  align-items: center;
+  padding: 25px 30px 10px;
+  justify-content: space-between;
+}
+header .icons1{
+  display: flex;
+}
+header .icons1 span{
+  height: 38px;
+  width: 38px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  text-align: center;
+  line-height: 38px;
+  font-size: 1.9rem;
+  user-select: none;
+  border-radius: 50%;
+}
+.icons1 span:last-child{
+  margin-right: -10px;
+}
+header .icons1 span:hover{
+  background: #f2f2f2;
+}
+header .current-date1{
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+.calendar1{
+  padding: 20px;
+}
+.calendar1 ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+}
+.calendar1 .days1{
+  margin-bottom: 20px;
+  padding-left: 0px;
+
+  
+}
+.weeks{
+  padding-left: 0px;
+
+}
+.calendar1 li{
+  color: #333;
+  width: calc(100% / 7);
+  font-size: 1.07rem;
+}
+.calendar1 .weeks li{
+  font-weight: 500;
+  cursor: default;
+  color: white;
+}
+.calendar1 .days1 li{
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 20px;
+
+}
+.days1 li.inactive1{
+  color: #aaa;
+}
+.days1 li.active{
+  color: #fff;
+}
+.days1 li::before{
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  background-color: #D0D7D9;
+}
+.days1 li.active::before{
+  background: #9B59B6;
+}
+.days1 li:not(.active):hover::before{
+  background: #f2f2f2;
+}
+.days1 .inactive1::before{
+  background: #f8f6f6;
+  color: white;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+
+
+.image-link {
+  margin: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.image-link:hover {
+  transform: scale(1.1);
+}
+
+.popupModel {
+  width: 90%;
+  height: 90%;
+  opacity: 1.00;
+  padding: 0px;
+  border-radius: 11px;
+  z-index: 2;
+
+}
+.imgModel{
+  height: 200px;
+}
+
+.btn1{
+  width: 170px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+
+}
+.headerModel{
+  font-family: "Poppins2";
+}
+/* Modal Styles */
+.modal2 {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content2 {
+  margin: auto;
+  margin-top: 10%;
+  display: block;
+  max-width: 60%;
+  max-height: 60%;
+  z-index: 2;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.imageAttachments{
+  padding: 0px;
+}
+
+.line{
+  border-bottom: 1px solid #A1A1A1;
+  width: 70%;
+}
+
+/* /////////////////////////////////////////////////////// */
+
+.upload-container{
+  background-color: white;
+  width: 70%;
+  height: 300px;
+  margin-top: 20px;
+
+}
+.upload-content{
+  padding-top: 10%;
+
+}
+a{
+  text-decoration-line: none;
+}
+
+
+/* ////////////////////////////////////////////////////////////////////////////// */
+
