@@ -10,10 +10,10 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="Home.css"> -->
-    <link rel="stylesheet" href="assets/css/home.css">
+    <!-- <link rel="stylesheet" href="Home2.css"> -->
+    <link rel="stylesheet" href="assets/css/home2.css">
 
-    <title>Home</title>
+    <title>Home2</title>
 </head>
 
 <body>
@@ -67,9 +67,8 @@
     </section>
 
 
-    <section class="features-section ">
-        <div class="container-fluid">
-          <div class="row text-center justify-content-center">
+    <section class="features-section py-4">
+    <div class="row text-center justify-content-center">
             <div class="col-md-4 feature-box">
               <!-- <img src="imgs/book.svg" alt="Efficient Ordering Process" class="feature-icon mb-3"> -->
               <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
@@ -94,23 +93,70 @@
         </div>
       </section>
 
-      <section class="related-links-section pt-5 mb-2">
+
+      <section class="featured-products py-5 mb-3 ">
+        <div class="container">
+            <h2 class="text-center mb-5">Featured <strong>Products</strong> </h2>
+            <div class="row Cards">
+
+                <!-- ==== -->
+                @foreach($items as $item)
+<a href="{{route('product', ['id' => $item->id])}}">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="product-card">
+            <div class="product-image">
+                <span class="product-points">{{ $item->points }} Points</span>
+                <a href="{{route('product', ['id' => $item->id])}}">
+                    <img src="{{ asset($item->images->first()->image_url) }}" alt="{{ $item->name }}">
+                </a>
+                <hr>
+            </div>
+            <div class="product-details ms-3">
+                <p class="product-name fw-bold">{{ $item->name }}</p>
+                <p class="product-price mt-1">{{ $item->price }} SAR</p>
+                <div class="product-actions">
+                    <a href=""><img src="{{ asset('assets/imgshome/Group 4622.svg') }}" alt="" class='icon-card-home'></a>
+                    <!-- Add to Cart Form -->
+                    <form action="{{ route('add_cart', ['id' => $item->id]) }}" method="POST" style="display: inline;">
+                        @csrf
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" style="border: none; background: none; padding: 0;" class='icon-card-home'>
+                            <img src="{{ asset('assets/imgshome/Group 1274.svg') }}" alt="Add to Cart" width=100>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+@endforeach
+
+
+
+             
+            <div class="text-center mt-3 ">
+                <a href="../shop/shop.html" class="btn viewAll">View All</a>
+            </div>
+        </div>
+    </section>
+    
+
+
+      <section class="related-links-section pt-5 mb-5">
         <div class="container">
           <h2 class="text-center">Related <strong>Links</strong></h2>
           <div class="row align-items-center ">
             <div class="col-md-6">
               <div class="carousel-image-container">
-              <!-- <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="" class="img-fluid mb-3" width='100' height='100'> -->
-
-                <img src="{{ asset('storage/' . $relatedLink->image) }}" alt="Related Image" class="img-fluid carousel-image">
+                <img src="../Home/imgs/jaw.png" alt="Related Image" class="img-fluid carousel-image">
               </div>
             </div>
             <div class="col-md-6">
-              <h3 class="related-title">{{$relatedLink->title}}</h3>
+              <h3 class="related-title">Terumo Dental injection needles 30G - 0.3 x 21mm</h3>
               <p class="related-description">
-              {{$relatedLink->description}}
+                We provide top-tier dental restorations that ensure patient satisfaction and enhance dental practices. Our state-of-the-art technology, combined with the expertise of our skilled technicians, allows us to deliver exceptional results, from crowns and bridges to custom prosthetics.
               </p>
-              <a href="{{$relatedLink->link}}" class="btn">Open Link</a>
+              <a href="#" class="btn">Open Link</a>
               <div class="carousel-controls mt-4">
                 <button id="prevBtn" class="carousel-btn"><</button>
                 <button id="nextBtn" class="carousel-btn">></button>
@@ -142,7 +188,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../login/login.js"></script>
-    <script src="Home.js"></script>
+    <script src="Home2.js"></script>
 </body>
 
 </html>

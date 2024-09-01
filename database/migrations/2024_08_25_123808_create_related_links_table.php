@@ -20,11 +20,21 @@ return new class extends Migration
             $table->string('image'); 
 
         });
+
+        DB::table('related_links')->insert([
+            'title' => 'Related Link Title',
+            'link' => 'https://example.com',
+            'description' => 'This is a description for the related link.',
+            'image' => 'related_image.jpg', // Image associated with the link
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
         Schema::dropIfExists('related_links');

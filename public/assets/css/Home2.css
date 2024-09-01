@@ -148,7 +148,8 @@ margin-right: 20px;
 
   .rectangle-container .bottom-img img{
     position: relative;
-    top: -400px;
+    top: -270px;
+    height: 60%;
     right: 300px;
     width: 750px;
     
@@ -310,7 +311,7 @@ width: 90%;
     font-weight: bold;
 }
 
-.product-actions img {
+.icon-card-home {
     position: relative;
     left: 150px;
     bottom: 45px;

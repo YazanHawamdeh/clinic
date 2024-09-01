@@ -91,7 +91,7 @@
                 <div class="collapse" id="dashboard">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="{{route('admin-dashboard')}}">
+                      <a href="{{route('index')}}">
                         <span class="sub-item">Dashboard 1</span>
                       </a>
                     </li>
@@ -223,16 +223,19 @@
 
               
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base4">
+                <a data-bs-toggle="collapse" href="#base6">
                   <i class="fas fa-layer-group"></i>
                   <p>Related Link</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="base4">
+                <div class="collapse" id="base6">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{{route('related_link_view')}}">
                         <span class="sub-item">Add Related Link Section</span>
+                      </a>
+                      <a href="{{route('edit_related_link', 1)}}">
+                        <span class="sub-item">Edit About Us</span>
                       </a>
                     </li>
 

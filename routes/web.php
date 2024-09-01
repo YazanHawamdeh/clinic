@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\Home;
 use App\Models\ItemImage;
+use App\Models\Item;
+
 use App\Models\Banner;
 use App\Models\AboutUs;
 use App\Models\Cart;
@@ -28,7 +30,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-route::get('/admin-dashboard', [Admin::class, 'index'])->name('admin-dashboard');
+route::get('/', [Admin::class, 'index'])->name('index');
 // route::get('/home', [Home::class, 'home'])->name('home');
 
 
@@ -73,13 +75,23 @@ route::get('/loginPage', [Home::class, 'loginPage'])->name('loginPage');
 
 route::get('/home', [Home::class, 'home'])->name('home');
 
+Route::get('/home2', [Home::class, 'home2'])->name('home2');
+
+Route::get('/product', [Home::class, 'product'])->name('product');
+
+
+Route::get('/edit_related_link/{id}', [Home::class, 'edit_related_link'])->name('edit_related_link');
+Route::post('/update_related_link/{id}', [Home::class, 'update_related_link'])->name('update_related_link');
 
 // Route::post('/updateItem/{id}', [Admin::class, 'updateItem']);
 // route::get('/delete_item/{id}', [Admin::class, 'delete_item']);
 //============================================================== Cart
 
 Route::get('/cart', [Home::class, 'show_cart'])->name('show_cart');
-Route::get('/remove/{id}', [Home::class, 'remove'])->name('remove');
+Route::post('/add_cart/{id}', [Home::class, 'add_cart'])->name('add_cart');
+Route::delete('/cart/{id}', [Home::class, 'remove_cart'])->name('remove_cart');
+
+// Route::get('/remove/{id}', [Home::class, 'remove'])->name('remove');
 Route::post('/checkout', [Home::class, 'checkout'])->name('checkout');
 Route::get('/orders', [Home::class, 'order'])->name('order');
 

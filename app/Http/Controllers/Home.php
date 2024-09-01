@@ -15,6 +15,8 @@ use App\Models\AboutUs;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\RelatedLinks;
+use App\Models\Item;
+
 
 
 
@@ -313,59 +315,110 @@ public function add_related_link(Request $request)
     // Redirect or return a response
     return redirect()->back()->with('message', 'Related link section added successfully');
 
-    // return redirect()->route('admin.forms.addRelated')->with('status', 'Related link added successfully!');
 }
+// ========================================================================update_related_link
+
+public function edit_related_link($id)
+{
+    $relatedLink = RelatedLinks::findOrFail(1);
+    
+
+    return view('admin.forms.updateRelated', compact('relatedLink'));
+}
+
+public function update_related_link(Request $request, $id)
+{
+    // Validate the request
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'link' => 'required|string',
+        'description' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg', 
+    ]);
+
+    $relatedLink = RelatedLinks::findOrFail($id);
+
+    if ($request->hasFile('image')) {
+        if ($relatedLink->image) {
+            Storage::disk('public')->delete($relatedLink->image);
+        }
+
+        $imagePath = $request->file('image')->store('images', 'public');
+        $relatedLink->image = $imagePath;
+    }
+
+    $relatedLink->title = $request->input('title');
+    $relatedLink->link = $request->input('link');
+    $relatedLink->description = $request->input('description');
+
+    $relatedLink->save();
+
+    // Redirect or return a response
+    return redirect()->back()->with('message', 'Related link updated successfully');
+
+}
+
 // =============================================================================================add_cart
-
-public function add_cart(Request $request,$id){
+public function add_cart(Request $request, $id) {
     if (Auth::id()) {
-        $user=Auth::user();
-        $item=Item::find($id);
-        $cart=new Cart;
-        $cart->name=$user->name;
-        $cart->email=$user->email;
-        $cart->phone=$user->phone;
-        $cart->address=$user->address;
-        $cart->user_id=$user->id;
-        $cart->item_title=$item->name;
-        $cart->price=$item->price * $request->quantity;
-        // $cart->image=$item->image;
-        $cart->item_id=$item->id;
-        $cart->quantity=$request->quantity;
+        $user = Auth::user();
+        $item = Item::find($id);
+        $cart = new Cart;
 
-        $images = $item->images->pluck('url')->toArray(); // Assuming the image URLs are stored in the 'url' field
+        $cart->name = $user->name;
+        $cart->email = $user->email;
+        $cart->phone = $user->phone;
+        $cart->address = $user->address;
+        $cart->user_id = $user->id;
+        $cart->item_title = $item->name;
+        $cart->price = $item->price * $request->quantity;
+        $cart->item_id = $item->id;
+        $cart->quantity = $request->quantity;
 
-        $cart->images = $images;
+        // Save only the first image URL
+        $firstImage = $item->images->first(); // Assuming the relation is defined and returns a collection
+        $cart->image = $firstImage ? $firstImage->url : null;
 
         $cart->save();
-        return redirect()->back();
 
-    }else{
+        return redirect()->back();
+    } else {
         return redirect('login');
     }
-    
-    
 }
+
+
+
 
 
 // -==show_cart
-public function show_cart(){
-    $usertype=Auth::user()->usertype;
-if ( $usertype!=1) {
-    if (Auth::id()) {
+// public function show_cart(){
+//     $usertype=Auth::user()->usertype;
+// if ( $usertype!=1) {
+//     if (Auth::id()) {
 
-        $id=Auth::user()->id;
-        $cart=Cart::where('user_id','=',$id)->get();
+//         $id=Auth::user()->id;
+//         $cart=Cart::where('user_id','=',$id)->get();
 
-        return view('admin.forms.viewCart',compact('cart')); 
+//         return view('admin.forms.viewCart',compact('cart')); 
 
-           }else{
-            return redirect('login');
-           }}
-           else{
-            $cart=Cart::all()->get();
-            return view('admin.forms.viewCart',compact('cart')); 
-           }
+//            }else{
+//             return redirect('login');
+//            }}
+//            else{
+//             $cart=Cart::all()->get();
+//             return view('admin.forms.viewCart',compact('cart')); 
+//            }
+// }
+public function show_cart() {
+    if (Auth::check()) {
+        $user = Auth::user();
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        return view('home.order.order', compact('cartItems'));
+    } else {
+        return redirect('login');
+    }
 }
 
 // -==remove_cart
@@ -422,5 +475,20 @@ public function remove_cart($id){
     public function home()
     {
         return view('home.Home.Home');
+    }
+
+    public function product()
+    {
+        return view('home.Product.product');
+    }
+
+    public function home2()
+    {
+        $items=Item::all();
+        $aboutUs = AboutUs::findOrFail(1);
+        $banner = Banner::findOrFail(1);
+        $relatedLink = RelatedLinks::findOrFail(1);
+
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }
 }
