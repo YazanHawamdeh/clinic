@@ -6,13 +6,13 @@ body {
    
 }
 .logo{
-    margin-left: 70px;
+    /* margin-left: 70px; */
 }
 
 
-.navbar-nav {
-    margin-left: 630px; /* Push the navbar items to the right */
-}
+/* .navbar-nav {
+    margin-left: 630px; 
+} */
 
 .nav-item {
     margin-right: 25px;
@@ -149,10 +149,10 @@ margin-right: 20px;
   .rectangle-container .bottom-img img{
     position: relative;
     top: -270px;
-    height: 60%;
+    height: 100%;
     right: 300px;
     width: 750px;
-    
+    object-fit: cover;
    
   }
   .rectangle-container .about-container {
@@ -274,10 +274,12 @@ width: 90%;
 
 .product-image img {
     max-width: 70%;
-    height: auto;
+    height: 11rem;
     
 }
-
+.product-actions{
+  margin-left: 50px;
+}
 .product-points {
     position: relative;
     top: -23px;
@@ -315,8 +317,11 @@ width: 90%;
     position: relative;
     left: 150px;
     bottom: 45px;
-  width: 12%;
+  width: 30px;
    
+}
+.addToCardBtn{
+  width: 30px;
 }
 .featured-products .viewAll{
     font-weight: 600;

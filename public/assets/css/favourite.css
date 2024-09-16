@@ -5,9 +5,9 @@ body {
     background-repeat: no-repeat;
   
 }
-.logo{
+/* .logo{
     margin-left: 70px;
-}
+} */
 
 
 .navbar-nav {
@@ -90,18 +90,95 @@ color: #37657c;
 }
 
 
+.container-profile{
+    position: relative;
+    left: -52px;
+}
+
+.main-card{
+    width: 65%;
+   
+}
+
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+   border: none;
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-item {
+    margin-bottom: 10px;
+    width: 100%;
+   margin-left: -17px;
+   width: calc(100% + 31px);
+  
+}
+
+.card-link {
+    font-size: 14px;
+    display: flex;
+    align-items: start;
+    padding: 10px 15px;
+   color: #B4B4B4;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.card-link img  {
+  
+  margin-left: -20px;
+  margin-right: 10px;
+}
+
+.card-link.active {
+    border-right: #3C757D solid 4px;
+    background-color: #E6F0F2;
+    color: #3C757D;
+}
+
+.card-link:hover {
+    background-color: #E6F0F2;
+    border-radius: 5px;
+}
+
+/* Icons next to the list items */
+.card-link::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+}
 
 
 
 
-  .featured-products{
-    margin-top: -60px;
+img.rounded-circle {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.featured-products{
+    position: relative;
+    right: 180px;
+    bottom: 70px;
   }
 
 
 .featured-products .Cards{
     margin-left: 70px;
-width: 90%;
+width: 1150px;
 }
 .featured-products h2 {
     font-size: 2rem;
@@ -130,7 +207,8 @@ width: 90%;
 
 .product-image img {
     max-width: 70%;
-    height: auto;
+    height: 11rem;
+    object-fit: cover;
     
 }
 
@@ -171,68 +249,15 @@ width: 90%;
     position: relative;
     left: 150px;
     bottom: 45px;
-  width: 12%;
+  /* width: 12%; */
    
 }
 .product-actions a:hover{
    opacity: 0.6;
    
 }
-
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagination .page-numbers button {
-    margin-right: 10px;
-   background-color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    font-weight: 600;
-    color: #D0D0D0; /* Dark grey text color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.pagination .page-numbers .btn.active {
-    background-color: white;
-color: #3C757D;
-
-}
-.pagination .movebtns{
-    background-color: #3C757D; /* Light grey background */
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 1.2rem;
-    color: white; /* Dark grey text color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.pagination .movebtns:hover{
-    background-color: #5b848a;
-}
-.pagination .page-numbers {
-    display: flex;
-    gap: 5px;
-}
-
-
- 
-
+    
+   
 .footer {
 
     background-color: #0B3D3B;
@@ -332,37 +357,125 @@ color: #8FB5BB;
 }
 
 
-
-@media (max-width:992px){
+@media (max-width: 1110px) and (min-width: 768px) {
     .navbar-nav {
    
-   margin-left: 70px;
- margin-top: 40px;
-    }
-    .nav-icons{
-      
-        margin-left: 0px;
-    }
-    .nav-item img{
-      
-        margin-left: -8px;
-    }
-  
-    .featured-products{
-        margin-top: 0px;
-      }
-      .featured-products .Cards{
-        margin-left: 30px;
-    width: 90%;
-    }
-    .product-card{
-        height: 370px;
-    }
+        margin-left: 70px;
+      margin-top: 40px;
+         }
+         .nav-icons{
+           
+             margin-left: 0px;
+         }
+         .nav-item img{
+           
+             margin-left: -8px;
+         }
+         .container-profile {
+            align-items: center;
+            margin-left: 50px;
+            padding: 0 15px;
+        }
+        
+     
+        .container-profile h2 {
+            font-size: 20px;
+            position: relative;
+            left: 0;
+           
+        }
+     
+        
+        .main-card {
+            position: relative;
+            left: 0;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+        .featured-products{
+            position: relative;
+            right: 0px;
+             }
+             .featured-products .Cards{
+                margin-left: 0px;
+            width: 120%;
+            }
+            .product-card{
+                height: 370px;
+            }
+            
+        
+        
     .footer-contact p {
-      width: 60%;
-    }
-    .footer-items{
-        margin-left: 0px;
-        width: 100%;
-    }
+        width: 60%;
+      }
+      .footer-items{
+          margin-left: 0px;
+          width: 100%;
+      }
 }
+
+@media (max-width: 767px) {
+    .navbar-nav {
+   
+        margin-left: 70px;
+      margin-top: 40px;
+         }
+         .nav-icons{
+           
+             margin-left: 0px;
+         }
+         .nav-item img{
+           
+             margin-left: -8px;
+         }
+         .container-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 90px;
+            padding: 0 10px;
+        }
+        
+        .container-profile h2 {
+            position: relative;
+            left:-40px ;
+            text-align: center;
+        }
+        
+        .main-card {
+            position: relative;
+            left: 0px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+      
+      
+        
+        .main-card .card-item img {
+            margin-left: 0;
+            width: 20px; /* Fixed width for smaller screens */
+            height: 20px; /* Maintain aspect ratio */
+        }
+        .featured-products{
+         position: relative;
+         right: 10px;
+          }
+          .featured-products .Cards{
+            margin-left: 0px;
+        width: 88%;
+        }
+        .product-card{
+            height: 370px;
+        }
+        
+       
+    .footer-contact p {
+        width: 60%;
+      }
+      .footer-items{
+          margin-left: 0px;
+          width: 100%;
+      }
+}
+

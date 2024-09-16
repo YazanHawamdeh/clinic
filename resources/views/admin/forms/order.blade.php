@@ -12,6 +12,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         /* .page-inner {
             padding: 20px;
@@ -91,30 +94,45 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($orders as $order)
-                        <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $order->user_id }}</td>
-                            <td>${{ $order->total_price }}</td>
-                            <td>
-                                <ul>
-                                    @foreach (json_decode($order->items) as $item)
-                                        <li>{{ $item->item_title }} - {{ $item->quantity }} x ${{ $item->price }}</li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>{{ $order->created_at }}</td>
-                            <td>
-                                <a href="{{ url('view_order', $order->id) }}" class="btn btn-link btn-primary" title="View">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="{{ url('delete_order', $order->id) }}" class="btn btn-link btn-danger" title="Delete">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
+    @foreach ($orders as $order)
+        <tr>
+            <td>{{ $order->id }}</td>
+            <td>{{ $order->user_id }}</td>
+            <td>${{ $order->total_price }}</td>
+            <td>
+                <ul>
+                    @foreach (json_decode($order->items) as $item)
+                        <li>{{ $item->item_title }} - {{ $item->quantity }} x ${{ $item->price }}</li>
+                        
+                        <!-- Assuming $item->id corresponds to the Item model -->
+                        @php
+                            $itemModel = \App\Models\Item::find($item->id);
+                        @endphp
+                        
+                        @if($itemModel)
+                            <div class="item-images">
+                                @foreach($itemModel->images as $image) <!-- Assuming $itemModel->images is the relation -->
+                                    <img src="{{ asset($image->image_url) }}" alt="{{ $item->item_title }}" width="50" height="50">
+                                @endforeach
+                            </div>
+                        @endif
                     @endforeach
-                </tbody>
+                </ul>
+            </td>
+            <td>{{ $order->created_at }}</td>
+            <td>
+                <a href="{{ url('view_order', $order->id) }}" class="btn btn-link btn-primary" title="View">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a href="javascript:void(0)" class="btn btn-link btn-danger" title="Delete" onclick="confirmDelete({{ $order->id }})">
+                    <i class="fa fa-trash"></i>
+                </a>
+
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
             </table>
         </div>
     </div>
@@ -127,6 +145,24 @@
                 pageLength: 5
             });
         });
+
+        function confirmDelete(orderId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the user confirms, redirect to delete the order
+                    window.location.href = '/delete_order/' + orderId;
+                }
+            })
+        }
+
     </script>
 </body>
 </html>

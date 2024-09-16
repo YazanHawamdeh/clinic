@@ -55,7 +55,12 @@
                 <hr>
                 <p class="mb-3 Total">Total <span class="total-amount">{{ number_format($cartItems->sum('price') + 20, 2) }} SAR</span></p>
                 <p class="Total-points">Total Points Earned <span class="points-earned">{{ $cartItems->sum('points') }}</span></p>
-                <button class="submit-order">Submit Order</button>
+                <!-- <button class="submit-order">Submit Order</button> -->
+                <form action="{{ route('checkout') }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('post')
+                        <button type='submit' class="submit-order">Submit Order</button>
+                        </form>
             </div>
         </div>
     </div>

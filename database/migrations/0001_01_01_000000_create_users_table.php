@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
+        // Insert admin user
         DB::table('users')->insert([
             'name' => 'admin',
             'phone' => '0788442773',
@@ -46,10 +48,13 @@ return new class extends Migration
             'userType' => 1, // Example user type
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Use Hash::make to hash the password
+            'password' => Hash::make('password'),
+            'profile_picture' => null, // Initially no profile picture
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // Insert yazan user
         DB::table('users')->insert([
             'name' => 'yazan',
             'phone' => '0788442773',
@@ -57,7 +62,8 @@ return new class extends Migration
             'userType' => 2, // Example user type
             'email' => 'yazan@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Use Hash::make to hash the password
+            'password' => Hash::make('password'),
+            'profile_picture' => null, // Initially no profile picture
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -73,3 +79,4 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
     }
 };
+

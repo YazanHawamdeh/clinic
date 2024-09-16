@@ -51,15 +51,9 @@
       <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-              <img
-                src="assets/img/kaiadmin/logo_light.svg"
-                alt="navbar brand"
-                class="navbar-brand"
-                height="20"
-              />
-            </a>
+          <div class="logo-header" data-background-color="white">
+                <img src="{{ asset('assets/imgshome/logo.png') }}" alt="logo" width=170 ></a>
+
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -77,27 +71,7 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-              <li class="nav-item active">
-                <a
-                  data-bs-toggle="collapse"
-                  href="#dashboard"
-                  class="collapsed"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="dashboard">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('index')}}">
-                        <span class="sub-item">Dashboard 1</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
@@ -235,7 +209,7 @@
                         <span class="sub-item">Add Related Link Section</span>
                       </a>
                       <a href="{{route('edit_related_link', 1)}}">
-                        <span class="sub-item">Edit About Us</span>
+                        <span class="sub-item">Edit Related Link Section</span>
                       </a>
                     </li>
 
@@ -303,14 +277,14 @@
               </li> --}}
 
 
-
+<!-- 
               <li class="nav-item">
                 <a href="../../documentation/index.html">
                   <i class="fas fa-file"></i>
                   <p>Documentation</p>
                   <span class="badge badge-secondary">1</span>
                 </a>
-              </li>
+              </li> -->
 
             </ul>
           </div>
@@ -350,7 +324,7 @@
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
           >
             <div class="container-fluid">
-              <nav
+              <!-- <nav
                 class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
               >
                 <div class="input-group">
@@ -365,10 +339,10 @@
                     class="form-control"
                   />
                 </div>
-              </nav>
+              </nav> -->
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <li
+                <!-- <li
                   class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
                 >
                   <a
@@ -392,8 +366,8 @@
                       </div>
                     </form>
                   </ul>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
+                </li> -->
+                <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                   <a
                     class="nav-link dropdown-toggle"
                     href="#"
@@ -426,8 +400,8 @@
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
+                </li> -->
+                <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                   <a
                     class="nav-link dropdown-toggle"
                     href="#"
@@ -458,8 +432,8 @@
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
+                </li> -->
+                <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                   <a
                     class="nav-link"
                     data-bs-toggle="dropdown"
@@ -469,7 +443,7 @@
                     <i class="fas fa-layer-group"></i>
                   </a>
 
-                </li>
+                </li> -->
 
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
@@ -478,13 +452,13 @@
                     href="#"
                     aria-expanded="false"
                   >
-                    <div class="avatar-sm">
+                    <!-- <div class="avatar-sm">
                       <img
                         src="assets/img/profile.jpg"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
-                    </div>
+                    </div> -->
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
                       <span class="fw-bold"> {{ Auth::user()->name }}</span>
@@ -494,31 +468,31 @@
                     <div class="dropdown-user-scroll scrollbar-outer">
                       <li>
                         <div class="user-box">
-                          <div class="avatar-lg">
+                          <!-- <div class="avatar-lg">
                             <img
                               src="assets/img/profile.jpg"
                               alt="image profile"
                               class="avatar-img rounded"
                             />
-                          </div>
+                          </div> -->
                           <div class="u-text">
                             <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
                             <p class="text-muted">{{ Auth::user()->email }}</p>
-                            <a
+                            <!-- <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
                               >View Profile</a
-                            >
+                            > -->
                           </div>
                         </div>
                       </li>
                       <li>
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">My Profile</a>
                         <a class="dropdown-item" href="#">My Balance</a>
                         <a class="dropdown-item" href="#">Inbox</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="#">Account Setting</a> -->
                         <div class="dropdown-divider"></div>
                         <form method="POST" action="{{ route('logout') }}">
                           @csrf

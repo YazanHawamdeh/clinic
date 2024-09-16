@@ -14,6 +14,15 @@ class Item extends Model
         return $this->hasMany(ItemImage::class);
     }
 
+    public function item()
+{
+    return $this->belongsTo(Item::class);
+}
+
+    // In the Item model
+protected $fillable = ['image_url', 'name', 'price', 'points'];
+
+
 //     public function categories()
 //     {
 //         return $this->hasMany(BlogCategory::class);

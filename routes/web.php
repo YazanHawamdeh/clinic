@@ -30,8 +30,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-route::get('/', [Admin::class, 'index'])->name('index');
-// route::get('/home', [Home::class, 'home'])->name('home');
+route::get('/index', [Admin::class, 'index'])->name('index');
+route::get('/', [Admin::class, 'home'])->name('home');
 
 
 
@@ -73,11 +73,14 @@ Route::post('/add_related_link', [Home::class, 'add_related_link'])->name('add_r
 
 route::get('/loginPage', [Home::class, 'loginPage'])->name('loginPage');
 
-route::get('/home', [Home::class, 'home'])->name('home');
+// route::get('/home', [Home::class, 'home'])->name('home');
 
 Route::get('/home2', [Home::class, 'home2'])->name('home2');
 
-Route::get('/product', [Home::class, 'product'])->name('product');
+Route::get('/product/{id}', [Home::class, 'product'])->name('product');
+
+Route::get('/shop', [Home::class, 'shop'])->name('shop');
+
 
 
 Route::get('/edit_related_link/{id}', [Home::class, 'edit_related_link'])->name('edit_related_link');
@@ -94,7 +97,20 @@ Route::delete('/cart/{id}', [Home::class, 'remove_cart'])->name('remove_cart');
 // Route::get('/remove/{id}', [Home::class, 'remove'])->name('remove');
 Route::post('/checkout', [Home::class, 'checkout'])->name('checkout');
 Route::get('/orders', [Home::class, 'order'])->name('order');
+Route::get('/delete_order/{id}', [Home::class, 'delete_order'])->name('delete_order');
 
+Route::post('/add-to-favorite/{id}', [Home::class, 'addToFavorite'])->name('add_to_favorite');
+Route::get('/favorites', [home::class, 'showFavorites'])->name('favorites');
+Route::delete('/remove_from_favorite/{id}', [home::class, 'removeFromFavorite'])->name('remove_from_favorite');
+
+Route::get('/allOrders', [home::class, 'allOrders'])->name('allOrders');
+
+Route::get('/profileInfo', [home::class, 'profileInfo'])->name('profileInfo');
+Route::put('/updateInfo', [home::class, 'updateInfo'])->name('updateInfo');
+
+
+
+// Route::get('/product/{id}',  [home::class, 'show_item'])->name('product.show');
 
 
 

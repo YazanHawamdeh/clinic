@@ -1,13 +1,13 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-image: url('imgs/background.png');
+    background-image: url('../Home/imgs/edited_image_flipped_bottom.png');
     background-size: cover; 
     background-repeat: no-repeat;
   
 }
-.logo{
+/* .logo{
     margin-left: 70px;
-}
+} */
 
 
 .navbar-nav {
@@ -97,6 +97,7 @@ color: #37657c;
 
 .main-card{
     width: 65%;
+   
 }
 
 
@@ -131,7 +132,7 @@ color: #37657c;
     transition: background-color 0.3s;
 }
 .card-link img  {
-   
+  
   margin-left: -20px;
   margin-right: 10px;
 }
@@ -157,83 +158,6 @@ color: #37657c;
     background-size: cover;
     background-position: center;
 }
-.big-card{
-    position: relative;
-    left: -110px;
-    height: auto;
-    width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.row .header{
-    margin-bottom: 10px;
-    border-bottom: 2px solid #ddd;
-    width: 80%;
-}
- .product-image h2 {
-    font-size: 30px;
-    font-weight: bold;
-   margin-bottom: 10px;
-    
-}
-.big-card .Cards{
-    width: 160%;
-}
-.big-card .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    
-}
-.big-card .cart-item:last-child{
-    border-bottom: none;
-}
-
-.product-img {
-    width: 150px;
-    height: 110px;
-    margin-right: 15px;
-}
-
-.item-details {
-    flex-grow: 1;
-}
-
-.product-name {
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    width: 100%;
-}
-
-.points {
-    font-weight: 500;
-    font-size: 13px;
-    color:  #3C757D;
-    opacity: 0.6;
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
-.price {
- position: relative;
- top: 10px;
-    color: #3C757D;
-    font-weight: 600;
-}
-
-.item-quantity {
-    display: flex;
-    align-items: center;
-position: relative;
-top: 50px;
-left: 30px;
-gap: 0px;;
-}
-
 
 img.rounded-circle {
     width: 100px;
@@ -241,33 +165,116 @@ img.rounded-circle {
     object-fit: cover;
     border-radius: 50%;
 }
-.product-details{
+
+.orders-container {
     position: relative;
-    background-color: white;
-    width: 140%;
-    left: -100px;
-    border-radius: 15px;
+    right: 100px;
+    width: 120%;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 0px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.product-details p {
+.orders-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+    margin-bottom: 5px;
+}
+ .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 0px;
+    margin-bottom: 5px;
+}
+.order-item button a{
+    text-decoration: none;
+}
+.order-item:nth-child(odd) {
+    background-color: transparent;
+}
+
+.order-item:nth-child(even) {
+    background-color: #E6F0F2;
+}
+.order-item:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.orders-header {
+    background-color: #183134;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.header-item, .order-no, .order-month, .order-year, .order-salary, .order-entry-date, .order-action {
+    flex: 1;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.order-no, .order-month, .order-year, .order-salary, .order-entry-date {
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 20px;
     font-weight: 600;
-     font-size: 16px;
-     margin-bottom: 10px;
- }
- 
- .amount, .total-amount, .points-earned {
-     float: right;
-     font-weight: bold;
- }
- .product-details .Total{
-     color: #3C757D;
-     font-size: 20px;
-     font-weight: 800;
- }
- .product-details .Total-points{
- color: #3C757D;
- opacity: 0.6;
- }
+}
+
+.order-action button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.pagination {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    display: flex;
+    width: 120%;
+    position: relative;
+    left: -100px;
+   border-radius: 10px;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.pagination .results-number {
+    width: 50px;
+    text-align: center;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.pagination .movebtns{
+    margin-top: 5px;
+    
+}
+.pagination button{
+    background-color: white;
+    border: none;
+
+}
+.pagination span {
+    margin-top: 5px;
+}
+.pagination .page-numbers span {
+    cursor: pointer;
+    color: #C4C4C4; /* Default color for inactive page numbers */
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.pagination .page-numbers span.active-page {
+    color: #000000; /* Black color for the active page number */
+}
 
 
 
@@ -372,7 +379,7 @@ color: #8FB5BB;
 }
 
 
-@media (max-width: 1120px) and (min-width: 768px) {
+@media (max-width: 1110px) and (min-width: 768px) {
     .navbar-nav {
    
         margin-left: 70px;
@@ -392,13 +399,13 @@ color: #8FB5BB;
             padding: 0 15px;
         }
         
-      
         .container-profile h2 {
             font-size: 20px;
             position: relative;
             left: 0;
            
         }
+     
         
         .main-card {
             position: relative;
@@ -406,37 +413,21 @@ color: #8FB5BB;
             width: 90%;
             margin-bottom: 20px;
         }
-     
-      
-        
-        .big-card {
-            left: -35px;
-            top: 0px;
-           width: 125%;
-            height: auto;
-            margin-bottom: 20px;
-            font-size: 13px;
+        .orders-container {
+            position: relative;
+            right: 0px;
+            left: 40px;
+            width: 120%;
+            padding: 0;
         }
+        .pagination{
+            position: relative;
+            left: 35px;
+           
+        }
+            
         
         
-        .big-card .Cards{
-            width: 155%;
-           }
-              
-           .row .header {
-            width: 110%;
-             }
-                  
-             .product-details{
-              position: relative;
-          
-              width: 120%;
-              left: 45px;
-             
-          }
-          .product-details p{
-            font-size: 13px;
-          }
     .footer-contact p {
         width: 60%;
       }
@@ -476,46 +467,37 @@ color: #8FB5BB;
         
         .main-card {
             position: relative;
-            left: 0px;
-            width: 80%;
+            left: 80px;
+            width: 60%;
             margin-bottom: 20px;
         }
       
-    
+      
         
         .main-card .card-item img {
             margin-left: 0;
             width: 20px; /* Fixed width for smaller screens */
             height: 20px; /* Maintain aspect ratio */
         }
-        
-        .big-card {
-            display: flex;
-            flex-direction: column; /* Make the card display vertically */
-            align-items: center;
+        .orders-container {
             position: relative;
-            left: 0;
-            margin: 0;
-            top: 10px;
-            width: 80%;
-            height: auto;
-            
+            right: 0px;
+            left: 10px;
+            width: 100%;
+            overflow-x: auto;
+            padding: 0;
         }
+        .pagination{
+            position: relative;
+            left: 10px;
+            width: 90%;
+        }
+          
         
-   .big-card .Cards{
-    width: 100%;
-   }
-   .row .header {
-  width: 100%;
-   }
-        
-   .product-details{
-    position: relative;
-    margin-top: 40px;
-    width: 80%;
-    left: 0px;
-   
-}
+        .footer{
+            width: 120%;
+        }
+       
     .footer-contact p {
         width: 60%;
       }

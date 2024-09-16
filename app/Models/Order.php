@@ -14,4 +14,8 @@ class Order extends Model
         'total_price',
         'items',
     ];
+
+    protected $casts = [
+        'entry_date' => 'datetime',
+    ];
 }

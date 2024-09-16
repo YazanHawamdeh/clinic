@@ -75,6 +75,7 @@ public function index() {
     $aboutUs = AboutUs::findOrFail(1);
     $banner = Banner::findOrFail(1);
     $relatedLink = RelatedLinks::findOrFail(1);
+    $items=Item::all();
 
 
 
@@ -84,8 +85,20 @@ public function index() {
 
         return view('admin.forms.index');
     }else{
-        return view('home.Home.Home',compact('aboutUs','banner','relatedLink'));
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }
+}
+// ========================================================================
+public function home() {
+
+    // $usertype=Auth::user()->userType;
+
+    $aboutUs = AboutUs::findOrFail(1);
+    $banner = Banner::findOrFail(1);
+    $relatedLink = RelatedLinks::findOrFail(1);
+
+        return view('home.Home.Home',compact('aboutUs','banner','relatedLink'));
+
 }
 
 // ================================================================== view add item page

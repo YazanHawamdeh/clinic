@@ -16,6 +16,8 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\RelatedLinks;
 use App\Models\Item;
+use App\Models\Favorite;
+
 
 
 
@@ -431,32 +433,32 @@ public function remove_cart($id){
 
 // ================================================================================checkout
 
-    public function checkout()
-    {
-        $user = Auth::user();
-        $cartItems = Cart::where('user_id', $user->id)->get();
+public function checkout()
+{
+    $user = Auth::user();
+    $cartItems = Cart::where('user_id', $user->id)->get();
 
-        if ($cartItems->isEmpty()) {
-            return view('admin.forms.addBanner')->with('error', 'Cart is empty');
-        }
-
-        // Calculate total price
-        $totalPrice = $cartItems->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
-        // Save the order
-        $order = Order::create([
-            'user_id' => $user->id,
-            'total_price' => $totalPrice,
-            'items' => $cartItems->toJson(),
-        ]);
-
-        // Clear the cart
-        Cart::where('user_id', $user->id)->delete();
-
-        return view('admin.forms.addBanner')->with('status', 'Order placed successfully');
+    if ($cartItems->isEmpty()) {
+        return redirect()->route('show_cart')->with('error', 'Cart is empty');
     }
+
+    // Calculate total price
+    $totalPrice = $cartItems->sum(function ($item) {
+        return $item->price * $item->quantity;
+    });
+
+    // Save the order
+    $order = Order::create([
+        'user_id' => $user->id,
+        'total_price' => $totalPrice,
+        'items' => $cartItems->toJson(),
+    ]);
+
+    // Clear the cart
+    Cart::where('user_id', $user->id)->delete();
+
+    return redirect()->with('status', 'Order placed successfully');
+}
 
 
     public function order()
@@ -466,6 +468,108 @@ public function remove_cart($id){
     }
 
     // ================================================================================view login
+
+    public function delete_order($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Optionally, you can handle associated records like order items here
+    // $order->items()->delete(); // If you have items related to the order
+
+    $order->delete();
+
+    return redirect()->back()->with('message', 'Order deleted successfully');
+}
+
+
+    // ================================================================================ add To Favorite
+
+    public function addToFavorite($id)
+    {
+        $user = auth()->user();
+    
+        // Ensure user is authenticated
+        if (!$user) {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }
+    
+        // Find or create the favorite
+        $favorite = Favorite::firstOrCreate([
+            'user_id' => $user->id,
+            'item_id' => $id
+        ]);
+    
+        return response()->json(['message' => 'Item added to favorites'], 200);
+    }
+    
+
+
+    public function showFavorites()
+    {
+        $favorites = Favorite::where('user_id', auth()->id())
+        ->with('item.images') // Eager load images
+        ->get();
+        
+        // Debugging: Check the structure of the retrieved data
+    
+        return view('home.favourite.favourite', compact('favorites'));
+    }
+    
+
+    public function removeFromFavorite($id)
+    {
+        // Assuming the Favorite model has an item related to it
+        $favorite = Favorite::where('item_id', $id)->first();
+    
+        if ($favorite) {
+            $favorite->delete();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Item not found'], 404);
+        }
+    }
+    
+
+    public function updateInfo(Request $request)
+    {
+        $user = Auth::user();
+    
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:15',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ]);
+    
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            // Delete old profile picture if it exists
+            if ($user->profile_picture) {
+                Storage::delete('public/' . $user->profile_picture);
+            }
+    
+            // Save the new profile picture
+            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $profilePicturePath;
+        }
+    
+        // Update user info
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->save();
+    
+        // Redirect back with a success message
+        return redirect()->route('profileInfo')->with('success', 'Profile updated successfully');
+    }
+    
+    
+    public function profileInfo()
+    {
+        $user = auth()->user();
+        return view('home.profile.profile', compact('user'));
+    }
 
     public function loginPage()
     {
@@ -477,18 +581,72 @@ public function remove_cart($id){
         return view('home.Home.Home');
     }
 
-    public function product()
+    public function allOrders()
     {
-        return view('home.Product.product');
+        $user = Auth::user(); // Get the authenticated user
+        $orders = Order::where('user_id', $user->id)->paginate(3); // Fetch orders with pagination
+        return view('home.allOrders.orders', compact('orders'));
+    }
+    
+
+    // public function showOrdersUser()
+    // {
+    //     $user = Auth::user(); 
+    //     $orders = Order::where('user_id', $user->id)->get(); 
+    
+    //     return view('orders', compact('orders')); 
+    // }
+    // public function product()
+    // {
+    //     return view('home.Product.product');
+    // }
+ 
+ // ================================    
+
+    public function product($id) {
+        // Retrieve the item by its ID
+        $item = Item::with('images')->findOrFail($id);
+    
+        // Pass the item to the view
+        return view('home.Product.product', compact('item'));
+    }
+// ================================ 
+
+
+    public function shop()
+    {
+        $items=Item::all();
+        return view('home.shop.shop',compact('items'));
     }
 
     public function home2()
     {
-        $items=Item::all();
+        // $items=Item::all();
+        $items = Item::orderBy('created_at', 'desc')->take(4)->get();
         $aboutUs = AboutUs::findOrFail(1);
         $banner = Banner::findOrFail(1);
         $relatedLink = RelatedLinks::findOrFail(1);
 
         return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }
+
+
+
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->validate([
+    //         'phone' => ['required', 'string'],
+    //         'password' => ['required', 'string'],
+    //     ]);
+    
+    //     if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+    //         $request->session()->regenerate();
+    //         return redirect()->intended('dashboard'); // Adjust to your intended route
+    //     }
+    
+    //     return back()->withErrors([
+    //         'phone' => 'The provided credentials do not match our records.',
+    //     ]);
+    // }
+
 }

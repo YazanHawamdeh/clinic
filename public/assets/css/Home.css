@@ -7,11 +7,11 @@ body {
     
 }
 .logo{
-    margin-left: 70px;
+    /* margin-left: 70px; */
 }
-.navbar-nav {
-    margin-left: 650px; /* Push the navbar items to the right */
-}
+/* .navbar-nav {
+    margin-left: 650px; 
+} */
 
 .nav-item {
     margin-right: 25px;
@@ -23,6 +23,17 @@ body {
 }
 .nav-link:hover{
 color: #37657c;
+
+}
+.profileInfoLi{
+  color: #000 !important;
+  text-decoration: none !important;
+padding: 15px;
+}
+.profileInfoLi:hover{
+  color: #000 !important;
+  text-decoration: none !important;
+padding: 15px;
 }
  .search-icon{
     background-color: #EFEFEF;
@@ -155,7 +166,8 @@ margin-right: 20px;
     top: -250px;
     right: 300px;
     width: 60%;
-    height: 90%;
+    height: 100%;
+    object-fit: cover;
     
    
   }
@@ -245,7 +257,7 @@ margin-right: 20px;
 
   .related-links-section {
     position: relative;
-    top: -120px;
+    /* top: -120px; */
     left: 160px;
     width: 80%;
     padding: 50px 0;
@@ -331,7 +343,7 @@ margin-right: 20px;
 
   .overlay-section {
     position: relative;
-    top: -100px;
+    /* top: -100px; */
     width: 100%;
     height: auto;
     display: flex;
