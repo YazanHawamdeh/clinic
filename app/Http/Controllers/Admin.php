@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 
 use App\Models\Item;
@@ -74,8 +76,8 @@ public function index() {
 
     $aboutUs = AboutUs::findOrFail(1);
     $banner = Banner::findOrFail(1);
-    $relatedLink = RelatedLinks::findOrFail(1);
-    $items=Item::all();
+    $relatedLink = RelatedLinks::all();
+    $items = Item::orderBy('created_at', 'desc')->take(4)->get();
 
 
 
@@ -95,7 +97,7 @@ public function home() {
 
     $aboutUs = AboutUs::findOrFail(1);
     $banner = Banner::findOrFail(1);
-    $relatedLink = RelatedLinks::findOrFail(1);
+    $relatedLink = RelatedLinks::all();
 
         return view('home.Home.Home',compact('aboutUs','banner','relatedLink'));
 
@@ -298,5 +300,61 @@ public function updateUser(Request $request, $id)
     return redirect()->back()->with('success', 'User updated successfully');
 }
 
+
+public function addUser(Request $request)
+{
+    // Validate incoming request
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'phone' => 'nullable|string|max:15',
+        'password' => 'required|string|min:8',
+        'address' => 'nullable|string|max:255',
+        'userType' => 'required|integer',
+        'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+    ]);
+
+    // Create new user instance
+    $user = new User();
+    $user->name = $request->input('name');
+    $user->email = $request->input('email');
+    $user->phone = $request->input('phone');
+    $user->password = Hash::make($request->input('password')); // Hash password
+    $user->address = $request->input('address');
+    $user->userType = $request->input('userType');
+
+    // Handle file upload for profile picture
+    if ($request->hasFile('profile_picture')) {
+        $file = $request->file('profile_picture');
+        $filename = time() . '-' . $file->getClientOriginalName();
+        $file->move(public_path('images/storage'), $filename);
+        $user->profile_picture = 'images/storage/' . $filename;
+    }
+
+    // Save the user to the database
+    $user->save();
+
+    // Redirect with success message
+    return redirect()->back()->with('message', 'User added successfully!');
+}
+
+
+public function view_users()
+{
+    // Fetch all users from the database
+    $users = User::all();
+
+    // Pass the users data to the view
+    return view('admin.forms.users', compact('users'));
+}
+
+public function addUserView()
+{
+    // Fetch all users from the database
+    $users = User::all();
+
+    // Pass the users data to the view
+    return view('admin.forms.addUser', compact('users'));
+}
 
 }

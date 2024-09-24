@@ -94,31 +94,60 @@
         </div>
       </section>
 
-      <section class="related-links-section pt-5 mb-2">
-        <div class="container">
-          <h2 class="text-center">Related <strong>Links</strong></h2>
-          <div class="row align-items-center ">
-            <div class="col-md-6">
-              <div class="carousel-image-container">
-              <!-- <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="" class="img-fluid mb-3" width='100' height='100'> -->
 
-                <img src="{{ asset('storage/' . $relatedLink->image) }}" alt="Related Image" class="img-fluid carousel-image">
-              </div>
+
+      <section class="related-links-section pt-5 mb-5">
+    <div class="container">
+        <h2 class="text-center">Related <strong>Links</strong></h2>
+        <div id="relatedLinksCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($relatedLink as $index => $link)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="carousel-image-container">
+
+                            <img src="{{ asset('assets/imgshome/jaw2.png') }}" alt="Related Image" class="img-fluid carousel-image">
+ 
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="related-title">{{ $link->title }}</h3>
+                            <p class="related-description">{{ $link->description }}</p>
+                            <a href="{{ $link->link }}" class="btn">Open Link</a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
-            <div class="col-md-6">
-              <h3 class="related-title">{{$relatedLink->title}}</h3>
-              <p class="related-description">
-              {{$relatedLink->description}}
-              </p>
-              <a href="{{$relatedLink->link}}" class="btn">Open Link</a>
-              <div class="carousel-controls mt-4">
+
+            <!-- Custom Buttons for Carousel -->
+            <div class="carousel-controls ">
                 <button id="prevBtn" class="carousel-btn"><</button>
                 <button id="nextBtn" class="carousel-btn">></button>
-              </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
+
+
+<script>
+    // JavaScript to handle carousel navigation
+    const carousel = document.querySelector('#relatedLinksCarousel');
+    const prevBtn = document.querySelector('#prevBtn');
+    const nextBtn = document.querySelector('#nextBtn');
+
+    prevBtn.addEventListener('click', function () {
+        const carouselInstance = new bootstrap.Carousel(carousel);
+        carouselInstance.prev();
+    });
+
+    nextBtn.addEventListener('click', function () {
+        const carouselInstance = new bootstrap.Carousel(carousel);
+        carouselInstance.next();
+    });
+</script>
+
         
       <section class="overlay-section">
         <img src="{{ asset('assets/imgshome/Union 31.png') }}" alt="Background Image" class="background-image">

@@ -290,73 +290,69 @@ public function related_link_view()
     return view('admin.forms.addRelated'); // Return the view with the form
 }
 
-
 public function add_related_link(Request $request)
 {
-    // Validate the request
+    // Validate the request for multiple entries
     $request->validate([
-        'title' => 'required|string|max:255',
-        'link' => 'required|string',
-        'description' => 'required|string',
-        'image' => 'required|image|mimes:jpeg,png,jpg', // Adjust validation rules as needed
+        'title.*' => 'required|string|max:255',
+        'link.*' => 'required|string',
+        'description.*' => 'required|string',
+        'image.*' => 'required|image|mimes:jpeg,png,jpg', // Adjust validation rules as needed
     ]);
 
-    // Handle the file upload
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('images', 'public');
+    // Loop through each slide
+    foreach ($request->input('title') as $index => $title) {
+        // Handle the file upload for each image
+        if ($request->hasFile('image.' . $index)) {
+            $imagePath = $request->file('image.' . $index)->store('images', 'public');
+
+            // Create a new RelatedLink instance and save it to the database
+            RelatedLinks::create([
+                'title' => $title,
+                'link' => $request->input('link')[$index],
+                'description' => $request->input('description')[$index],
+                'image' => $imagePath,
+            ]);
+        }
     }
 
-    // Create a new RelatedLink instance and save it to the database
-    RelatedLinks::create([
-        'title' => $request->input('title'),
-        'link'=> $request->input('link'),
-        'description' => $request->input('description'),
-        'image' => $imagePath ?? null,
-    ]);
-
     // Redirect or return a response
-    return redirect()->back()->with('message', 'Related link section added successfully');
-
+    return redirect()->back()->with('message', 'Related links added successfully');
 }
+
 // ========================================================================update_related_link
 
-public function edit_related_link($id)
+public function edit_related_link()
 {
-    $relatedLink = RelatedLinks::findOrFail(1);
+    $relatedLinks = RelatedLinks::all();
     
 
-    return view('admin.forms.updateRelated', compact('relatedLink'));
+    return view('admin.forms.updateRelated', compact('relatedLinks'));
 }
 
-public function update_related_link(Request $request, $id)
+public function update_related_link(Request $request)
 {
-    // Validate the request
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'link' => 'required|string',
-        'description' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg', 
-    ]);
+    $relatedLinks = $request->input('relatedLinks');
 
-    $relatedLink = RelatedLinks::findOrFail($id);
+    foreach ($relatedLinks as $linkData) {
+        $relatedLink = RelatedLinks::find($linkData['id']);
+        
+        if ($relatedLink) {
+            $relatedLink->title = $linkData['title'];
+            $relatedLink->link = $linkData['link'];
+            $relatedLink->description = $linkData['description'];
 
-    if ($request->hasFile('image')) {
-        if ($relatedLink->image) {
-            Storage::disk('public')->delete($relatedLink->image);
+            // Handle file upload
+            if ($request->hasFile("relatedLinks.{$linkData['id']}.image")) {
+                $imagePath = $request->file("relatedLinks.{$linkData['id']}.image")->store('images', 'public');
+                $relatedLink->image = $imagePath;
+            }
+
+            $relatedLink->save();
         }
-
-        $imagePath = $request->file('image')->store('images', 'public');
-        $relatedLink->image = $imagePath;
     }
 
-    $relatedLink->title = $request->input('title');
-    $relatedLink->link = $request->input('link');
-    $relatedLink->description = $request->input('description');
-
-    $relatedLink->save();
-
-    // Redirect or return a response
-    return redirect()->back()->with('message', 'Related link updated successfully');
+    return redirect()->back()->with('message', 'Related Links updated successfully!');
 
 }
 
@@ -377,9 +373,9 @@ public function add_cart(Request $request, $id) {
         $cart->item_id = $item->id;
         $cart->quantity = $request->quantity;
 
-        // Save only the first image URL
-        $firstImage = $item->images->first(); // Assuming the relation is defined and returns a collection
-        $cart->image = $firstImage ? $firstImage->url : null;
+        // Fetch and save the first image from imagesItem
+        $firstImage = $item->images->first(); // Assuming the relation is defined
+        $cart->image = $firstImage ? $firstImage->image_url : null; // Ensure correct field is used
 
         $cart->save();
 
@@ -390,8 +386,64 @@ public function add_cart(Request $request, $id) {
 }
 
 
+public function updateCart(Request $request)
+{
+    $cartItem = Cart::find($request->id); // Find the cart item by its ID
+    if ($cartItem) {
+        $cartItem->quantity = $request->quantity; // Update the quantity
+        $cartItem->save(); // Save changes to the database
+
+        // Optionally, calculate new price for the updated quantity
+        $newPrice = $cartItem->price * $cartItem->quantity;
+
+        return response()->json([
+            'success' => true,
+            'newPrice' => $newPrice,
+        ]);
+    }
+
+    return response()->json(['success' => false], 404);
+}
+ 
 
 
+public function updateQuantity(Request $request, $id)
+{
+    $cartItem = Cart::find($id);
+    if ($cartItem) {
+        $cartItem->quantity = $request->quantity;
+        $cartItem->save();
+
+        // Calculate the new price for the item
+        $newPrice = $cartItem->quantity * $cartItem->price;
+
+        return response()->json(['success' => true, 'newPrice' => $newPrice]);
+    }
+
+    return response()->json(['success' => false], 400);
+}
+
+public function getOrderDetails($id) {
+    $order = Order::find($id);
+    if ($order) {
+        // You can format the order details here or create a Blade view to return
+        return view('admin.forms.ordersDetails', compact('order'));
+    } else {
+        return response()->json(['error' => 'Order not found'], 404);
+    }
+}
+
+public function orderDetails($orderId)
+{
+
+    
+    $order = Order::find($orderId); 
+    $orderItems = json_decode($order->items, true); 
+    // dd($orderItems);
+
+    return view('home.orderDetails.details', ['order' => $order, 'orderItems' => $orderItems]);
+    
+}
 
 // -==show_cart
 // public function show_cart(){
@@ -442,6 +494,7 @@ public function checkout()
         return redirect()->route('show_cart')->with('error', 'Cart is empty');
     }
 
+    
     // Calculate total price
     $totalPrice = $cartItems->sum(function ($item) {
         return $item->price * $item->quantity;
@@ -457,7 +510,7 @@ public function checkout()
     // Clear the cart
     Cart::where('user_id', $user->id)->delete();
 
-    return redirect()->with('status', 'Order placed successfully');
+    return redirect()->back()->with('status', 'Order placed successfully');
 }
 
 
@@ -576,10 +629,11 @@ public function checkout()
         return view('home.login.loginPage');
     }
 
-    public function home()
-    {
-        return view('home.Home.Home');
-    }
+    // public function home()
+    // {
+        
+    //     return view('home.Home.Home');
+    // }
 
     public function allOrders()
     {
@@ -625,7 +679,7 @@ public function checkout()
         $items = Item::orderBy('created_at', 'desc')->take(4)->get();
         $aboutUs = AboutUs::findOrFail(1);
         $banner = Banner::findOrFail(1);
-        $relatedLink = RelatedLinks::findOrFail(1);
+        $relatedLink = RelatedLinks::all();
 
         return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }

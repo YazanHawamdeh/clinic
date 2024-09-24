@@ -83,8 +83,8 @@ Route::get('/shop', [Home::class, 'shop'])->name('shop');
 
 
 
-Route::get('/edit_related_link/{id}', [Home::class, 'edit_related_link'])->name('edit_related_link');
-Route::post('/update_related_link/{id}', [Home::class, 'update_related_link'])->name('update_related_link');
+Route::get('/edit_related_link', [Home::class, 'edit_related_link'])->name('edit_related_link');
+Route::post('/update_related_link', [Home::class, 'update_related_link'])->name('update_related_link');
 
 // Route::post('/updateItem/{id}', [Admin::class, 'updateItem']);
 // route::get('/delete_item/{id}', [Admin::class, 'delete_item']);
@@ -104,6 +104,13 @@ Route::get('/favorites', [home::class, 'showFavorites'])->name('favorites');
 Route::delete('/remove_from_favorite/{id}', [home::class, 'removeFromFavorite'])->name('remove_from_favorite');
 
 Route::get('/allOrders', [home::class, 'allOrders'])->name('allOrders');
+
+Route::get('/orderDetails/{order}', [home::class, 'orderDetails'])->name('orderDetails');
+
+Route::get('/view_users', [Admin::class, 'view_users'])->name('view_users');
+Route::post('/add_user', [Admin::class, 'addUser'])->name('addUser');
+Route::get('/add_user', [Admin::class, 'addUserView'])->name('addNewUser');
+
 
 Route::get('/profileInfo', [home::class, 'profileInfo'])->name('profileInfo');
 Route::put('/updateInfo', [home::class, 'updateInfo'])->name('updateInfo');
@@ -138,12 +145,15 @@ Route::post('/updateUser/{id}', [Admin::class, 'updateUser']);
 // Route::post('/updateBlog/{id}', [Admin::class, 'updateBlog'])->name('updateBlog');
 
 
+Route::post('/update_cart', [Home::class, 'updateCart'])->name('update_cart');
 
+Route::post('/update_quantity/{id}', [Home::class, 'updateQuantity'])->name('update_quantity');
 
 
 route::get('/addAdmin', [Admin::class, 'addAdmin'])->name('addAdmin');
 
 
+Route::get('/get_order_details/{id}', [Home::class, 'getOrderDetails']);
 
 require __DIR__.'/auth.php';
 

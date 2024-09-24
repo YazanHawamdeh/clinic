@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-image: url('../Home/imgs/edited_image_flipped_bottom.png');
+    background-image: url('../imgshome/edited_image_flipped_bottom.png');
     background-size: cover; 
     background-repeat: no-repeat;
   
@@ -66,6 +66,16 @@ color: #37657c;
     padding: 3px 10px;
     margin-left: -15px;
 }
+.icon-card-home {
+    position: relative;
+    /* left: 150px; */
+    /* bottom: 45px; */
+  width: 30px;
+   
+}
+.addToCardBtn{
+    width: 30px;
+  }
 .nav-item img{
     width: 50px;
     margin-top: 3px;
@@ -130,7 +140,7 @@ width: 90%;
 
 .product-image img {
     max-width: 70%;
-    height: auto;
+    height: 11rem;
     
 }
 

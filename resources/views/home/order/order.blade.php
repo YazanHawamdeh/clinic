@@ -9,6 +9,8 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/order.css">
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
+
     <title>Order</title>
 </head>
 <body>
@@ -22,21 +24,20 @@
 
                 @foreach($cartItems as $item)
                 <div class="cart-item">
-                @if(is_array($item->images) && count($item->images) > 0)
-                    <img src="{{ asset('storage/' . $item->images[0]) }}" alt="Product Image" class="product-img">
-                @else
-                    <img src="{{ asset('path_to_default_image/default.png') }}" alt="Default Image" class="product-img">
-                @endif
+                        <img src="{{ asset($item->image) }}" alt="Product Image" class="product-img">
+ 
+
                     <div class="item-details">
                         <p class="product-name">{{ $item->item_title }}</p>
                         <p class="points">{{ $item->points }} Points</p>
                         <p class="price">{{ number_format($item->price, 2) }} SAR</p>
                     </div>
                     <div class="item-quantity">
-                        <button class="quantity-btn decrement-btn">-</button>
-                        <input type="number" value="{{ $item->quantity }}" min="1" class="quantity-input" readonly>
-                        <button class="quantity-btn increment-btn">+</button>
+                        <button class="quantity-btn decrement-btn" data-id="{{ $item->id }}">-</button>
+                        <input type="number" value="{{ $item->quantity }}" min="1" class="quantity-input" data-id="{{ $item->id }}">
+                        <button class="quantity-btn increment-btn" data-id="{{ $item->id }}">+</button>
                     </div>
+
                     <form action="{{ route('remove_cart', ['id' => $item->id]) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
@@ -71,3 +72,160 @@
     <script src="../login/login.js"></script>
     <script src="order.js"></script>
 </body>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const incrementButtons = document.querySelectorAll('.increment-btn');
+    const decrementButtons = document.querySelectorAll('.decrement-btn');
+    const subtotalElement = document.querySelector('.subtotal-amount');
+    const totalElement = document.querySelector('.total-amount');
+    const deliveryAmount = 20;  
+
+    function updateTotal() {
+        let subtotal = 0;
+        let total = 0;
+        let pointsEarned = 0;
+
+        document.querySelectorAll('.cart-item').forEach(item => {
+            const quantityInput = item.querySelector('.quantity-input');
+            const priceElement = item.querySelector('.price');
+            const pointsElement = item.querySelector('.points');
+            const price = parseFloat(priceElement.textContent.replace(' SAR', ''));
+            const points = parseInt(pointsElement.textContent);
+            const quantity = parseInt(quantityInput.value);
+
+            subtotal += price * quantity;
+            pointsEarned += points * quantity;
+        });
+
+        subtotalElement.textContent = subtotal.toFixed(2) + ' SAR';
+        totalElement.textContent = (subtotal + deliveryAmount).toFixed(2) + ' SAR';
+        document.querySelector('.points-earned').textContent = pointsEarned;
+    }
+
+    function updateQuantityInBackend(itemId, newQuantity) {
+    fetch("{{ route('update_cart') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            id: itemId,
+            quantity: newQuantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Optionally update the item's price or total
+            updateTotal();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+    incrementButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = button.getAttribute('data-id');
+            const quantityInput = document.querySelector(`.quantity-input[data-id='${itemId}']`);
+            let quantity = parseInt(quantityInput.value);
+            quantityInput.value = ++quantity;
+
+            updateQuantityInBackend(itemId, quantity);
+        });
+    });
+
+    decrementButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = button.getAttribute('data-id');
+            const quantityInput = document.querySelector(`.quantity-input[data-id='${itemId}']`);
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantityInput.value = --quantity;
+
+                updateQuantityInBackend(itemId, quantity);
+            }
+        });
+    });
+
+    updateTotal();
+});
+
+
+$('.quantity-input').on('change', function() {
+    let cartItemId = $(this).data('id'); // Get the item's ID
+    let quantity = $(this).val(); // Get the new quantity
+
+    $.ajax({
+        url: `/update_quantity/${cartItemId}`,
+        type: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            quantity: quantity
+        },
+        success: function(response) {
+            if (response.success) {
+                $(`#item-total-${cartItemId}`).text(response.newPrice.toFixed(2)); // Update total
+                updateTotal();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
+
+
+
+
+fetch("{{ route('update_cart') }}", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+    },
+    body: JSON.stringify({
+        id: itemId,
+        quantity: newQuantity
+    })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();  // Ensure JSON is returned
+})
+.then(data => {
+    if (data.success) {
+        updateTotal();
+    } else {
+        console.error('Update failed');
+    }
+})
+.catch(error => console.error('Error:', error));
+
+
+
+function addToCart(itemId) {
+    let quantity = $('.quantity-input').val();
+
+    $.ajax({
+        url: '/add_to_cart/' + itemId,
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            quantity: quantity
+        },
+        success: function(response) {
+            // Show success toast message
+            $('#cartToast').toast('show');
+        }
+    });
+}
+
+
+</script>

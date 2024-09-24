@@ -102,7 +102,7 @@
             <td>
                 <ul>
                     @foreach (json_decode($order->items) as $item)
-                        <li>{{ $item->item_title }} - {{ $item->quantity }} x ${{ $item->price }}</li>
+                        <li>{{ $item->item_title }} <!-- - {{ $item->quantity }} x ${{ $item->price }} --></li>
                         
                         <!-- Assuming $item->id corresponds to the Item model -->
                         @php
@@ -121,9 +121,10 @@
             </td>
             <td>{{ $order->created_at }}</td>
             <td>
-                <a href="{{ url('view_order', $order->id) }}" class="btn btn-link btn-primary" title="View">
+            <a href="javascript:void(0)" class="btn btn-link btn-primary" title="View" onclick="viewOrder({{ $order->id }})">
                     <i class="fa fa-eye"></i>
                 </a>
+
                 <a href="javascript:void(0)" class="btn btn-link btn-danger" title="Delete" onclick="confirmDelete({{ $order->id }})">
                     <i class="fa fa-trash"></i>
                 </a>
@@ -136,6 +137,28 @@
             </table>
         </div>
     </div>
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Order details will be loaded here via AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -162,6 +185,22 @@
                 }
             })
         }
+
+
+
+        function viewOrder(orderId) {
+    $.ajax({
+        url: '/get_order_details/' + orderId, // Adjust to your route for fetching order details
+        method: 'GET',
+        success: function(response) {
+            $('#modal-body-content').html(response); // Load the response into the modal body
+            $('#orderModal').modal('show'); // Show the modal
+        },
+        error: function() {
+            Swal.fire('Error', 'Unable to load order details. Please try again later.', 'error');
+        }
+    });
+}
 
     </script>
 </body>

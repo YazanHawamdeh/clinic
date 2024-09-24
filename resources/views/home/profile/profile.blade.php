@@ -82,12 +82,18 @@
         <div class="d-grid gap-2">
             <button type="submit" class="btn submit mb-1">Update</button>
             <button type="button" class="btn logout"> 
-                <img src="imgs/Group 4686.svg" alt="" class="me-2">Logout
+                <img src="imgs/Group 4686.svg" alt="" class="me-2"><a href="{{ route('logout') }}">Logout</a>
             </button>
         </div>
     </div>
 </form>
 
+<!-- <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="btn logout">
+        {{ __('Logout') }}
+    </button>
+</form> -->
                 </div>
             </div>
 

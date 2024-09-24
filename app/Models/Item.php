@@ -9,14 +9,24 @@ class Item extends Model
 {
     use HasFactory;
 
-    public function images()
-    {
-        return $this->hasMany(ItemImage::class);
-    }
+    // public function images()
+    // {
+    //     return $this->hasMany(ItemImage::class);
+    // }
 
+    
     public function item()
 {
     return $this->belongsTo(Item::class);
+}
+
+public function order()
+{
+    return $this->belongsTo(Order::class);
+}
+// Item.php
+public function images() {
+    return $this->hasMany(ItemImage::class, 'item_id');
 }
 
     // In the Item model

@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description'); // Use 'text' type for longer descriptions
-            $table->integer('price'); // Assuming price in coins
+            $table->text('description'); 
+            $table->integer('price'); 
             $table->integer('points'); 
             $table->string('quantity')->nullable();
-            // $table->string('image_url'); 
             $table->timestamps();
         });
     }

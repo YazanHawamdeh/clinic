@@ -152,7 +152,7 @@
                   </ul>
                 </div>
               </li>
-
+<!-- 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base5">
                   <i class="fas fa-layer-group"></i>
@@ -165,15 +165,13 @@
                       <a href="{{route('show_cart')}}">
                         <span class="sub-item">show_cart</span>
                       </a>
-                      <!-- <a href="{{route('edit_about_us', 1)}}">
-                        <span class="sub-item">update About Us</span>
-                      </a> -->
+
                     </li>
 
 
                   </ul>
                 </div>
-              </li>
+              </li> -->
 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base4">
@@ -208,7 +206,7 @@
                       <a href="{{route('related_link_view')}}">
                         <span class="sub-item">Add Related Link Section</span>
                       </a>
-                      <a href="{{route('edit_related_link', 1)}}">
+                      <a href="{{route('edit_related_link')}}">
                         <span class="sub-item">Edit Related Link Section</span>
                       </a>
                     </li>
@@ -243,6 +241,16 @@
                         <span class="sub-item">Show Admin</span>
                       </a>
                     </li> --}}
+                    <li>
+                    <a href="{{route('addUser')}}">
+                        <span class="sub-item">add user</span>
+                      </a>
+                    </li>
+                    <li>
+                    <a href="{{route('view_users')}}">
+                        <span class="sub-item">view users</span>
+                      </a>
+                    </li>
                     <li>
                       <a href="{{route('admins')}}">
                         <span class="sub-item">Admin Management</span>

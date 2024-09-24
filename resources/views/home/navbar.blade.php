@@ -3,8 +3,9 @@
 <nav class="navbar navbar-expand-lg mt-3 ">
         <div class="container">
             <div class="logo">
-                <a href="Home.html">
-                <img src="./assets/imgshome/logo.png" alt="logo" ></a>
+                <a href="{{ route('home2')}}">
+                <img src="{{ asset('assets/imgshome/logo.png') }}" alt="logo" ></a>
+
             </div>
             <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

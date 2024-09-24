@@ -23,9 +23,17 @@ class ItemImage extends Model
     // {
     //     return $this->belongsTo(Blog::class);
     // }
+    // public function item()
+    // {
+    //     return $this->belongsTo(Item::class);
+    // }
+    
+    protected $table = 'item_images'; // Assuming the table is named 'images_item'
+
+    // Define the inverse relationship
     public function item()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class, 'item_id');
     }
-    
+
 }

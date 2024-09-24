@@ -63,7 +63,7 @@
                                 <div class="order-salary">{{ number_format($order->total_price , 2) }} SAR</div>
                                 <div class="order-entry-date">{{ $order->entry_date ? $order->entry_date->format('d/m/Y') : 'N/A' }}</div>
                                 <div class="order-action">
-                                    <button class="edit-btn">✏️</button>
+                                    <button class="edit-btn"><a href="{{ route('orderDetails', $order->id) }}">✏️</a></button>
                                     <button class="delete-btn" ><a href="{{ route('delete_order', $order->id) }}">❌</a></button>
                                 </div>
                             </div>

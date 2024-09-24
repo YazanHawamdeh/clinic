@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('item_title')->nullable();
             $table->string('price')->nullable();
-            $table->string('quantity')->nullable();
+            $table->string('quantity')->default(1);
             $table->string('image')->nullable();
             $table->string('item_id')->nullable();
             $table->string('user_id')->nullable();
