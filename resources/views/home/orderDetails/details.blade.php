@@ -24,8 +24,9 @@
             <!-- Sidebar -->
             <div class="col-md-3 main">
                 <div class="card main-card text-center p-3">
-                    <div class="image-name">
-                    <img src="imgs/bigProfile.png" alt="Profile Picture" class="rounded-circle img-fluid ">
+                <div class="image-name">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('imgs/bigProfile.png') }}" 
+                        alt="Profile Picture" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
                     <h6 class="mt-3 fw-bold">{{ Auth::user()->name }}</h6>
                 </div>
                 <ul class="card flex-column mt-2">

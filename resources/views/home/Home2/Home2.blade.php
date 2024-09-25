@@ -121,7 +121,7 @@
                                     @csrf
                                     <input type="hidden" name="quantity" value="1">
                                     <button type="submit" style="border: none; background: none; padding: 0;" class="icon-card-home">
-                                        <img src="{{ asset('assets/imgshome/Group 1274.svg') }}" alt="Add to Cart" class="addToCardBtn">
+                                        <img src="{{ asset('assets/imgshome/Group 1274.svg') }}" alt="Add to Cart" class="addToCardBtn" id='add-to-cart-button'>
                                     </button>
                                 </form>
                             </div>

@@ -3,7 +3,13 @@
 <nav class="navbar navbar-expand-lg mt-3 ">
         <div class="container">
             <div class="logo">
-                <a href="{{ route('home2')}}">
+            @if(Auth::check())
+            <a href="{{ route('home2')}}">
+
+                @else 
+                <a href="{{ route('home')}}">
+
+                @endif  
                 <img src="{{ asset('assets/imgshome/logo.png') }}" alt="logo" ></a>
 
             </div>
@@ -23,18 +29,37 @@
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>
 
-                @endif    
-                    <li class="nav-item">
+                @endif  
+                
+                @if(Auth::check())
+                <li class="nav-item">
                         <a class="nav-link" href="{{ route('home2') }}#about">About</a>
                     </li>
+                @else 
+                <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}#about">About</a>
+                    </li>
+
+                @endif 
+
                     @if(Auth::check())
                     <li class="nav-item">
                         <a href="{{ route('shop') }}" class="nav-link">Shop</a>
                     </li>
                     @endif
+
+
+                    @if(Auth::check())
                     <li class="nav-item ">
                         <a class="nav-link me-3" href="{{ route('home2') }}#contact" >Contact</a>
                     </li>
+                @else 
+                <li class="nav-item ">
+                        <a class="nav-link me-3" href="{{ route('home') }}#contact" >Contact</a>
+                    </li>
+
+                @endif   
+
                     <li class="nav-item ">
                         <button class="btn search-icon rounded-circle" id="search-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="grey"
@@ -58,13 +83,20 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('show_cart') }}" class="btn nav-icons rounded-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-bag-fill" viewBox="0 0 16 16">
-                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
-                            </svg>
-                        </a>
-                    </li>
+<li class="nav-item position-relative">
+    <a href="{{ route('show_cart') }}" class="btn nav-icons rounded-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-bag-fill" viewBox="0 0 16 16">
+            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
+        </svg>
+        <!-- Cart Badge -->
+        <!-- @if($cartCount > 0) -->
+            <span class="badge position-absolute top-0 start-100 translate-middle bg-danger rounded-pill">
+                {{ $cartCount }}
+            </span>
+        <!-- @endif -->
+    </a>
+</li>
+
                     <!-- <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -108,3 +140,6 @@
             </div>
         </div>
     </nav>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+

@@ -8,23 +8,7 @@
         <div class="page-header">
             <h3 class="fw-bold mb-3">Update Related Links</h3>
             <ul class="breadcrumbs mb-3">
-                <li class="nav-home">
-                    <a href="#">
-                        <i class="icon-home"></i>
-                    </a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Related Links</a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Update Related Links</a>
-                </li>
+                <!-- Breadcrumbs content -->
             </ul>
         </div>
 
@@ -36,8 +20,7 @@
         @endif
 
         @foreach($relatedLinks as $relatedLink)
-
-        <div class="card">
+        <div class="card" id="card-{{ $relatedLink->id }}">
             <div class="card-body">
                 <div class="row">
                     <input type="hidden" name="relatedLinks[{{ $relatedLink->id }}][id]" value="{{ $relatedLink->id }}">
@@ -72,10 +55,13 @@
                             @endif
                         </div>
                     </div>
+                    
+                    <div class="col-md-12 col-lg-12">
+                        <button type="button" class="btn btn-danger" onclick="deleteCard({{ $relatedLink->id }})">Remove Card</button>
+                    </div>
                 </div>
             </div>
         </div>
-
         @endforeach
 
         <div class="card-action">
@@ -83,3 +69,56 @@
         </div>
     </div>
 </form>
+
+<script>
+    function deleteCard(id) {
+        // Show SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with AJAX request to delete
+                $.ajax({
+                    url: '/related-link/' + id,
+                    type: 'DELETE',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Remove the card from the UI
+                            document.getElementById('card-' + id).remove();
+                            
+                            // Show success message
+                            Swal.fire(
+                                'Deleted!',
+                                response.message,
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire(
+                            'Error!',
+                            'Could not delete related link.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        })
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

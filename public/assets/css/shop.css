@@ -139,9 +139,9 @@ width: 90%;
 }
 
 .product-image img {
-    max-width: 70%;
+    width: 70%;
     height: 11rem;
-    
+    object-fit: cover;
 }
 
 .product-points {

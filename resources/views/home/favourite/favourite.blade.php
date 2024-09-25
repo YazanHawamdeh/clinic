@@ -67,7 +67,7 @@
                 <p class="product-price mt-1">{{ $favorite->item->price }} SAR</p>
                 <div class="product-actions">
                     <a href="javascript:void(0)" class="me-2" onclick="removeFromFavorite({{ $favorite->item->id }})">
-                        <img src="{{ asset('assets/imgshome/removeFav.svg') }}" alt="Remove from favorite">
+                        <img src="{{ asset('assets/imgshome/removeFav.svg') }}" alt="Remove from favorite" class='addToCardBtn'>
                     </a>
                     <form action="{{ route('add_cart', ['id' => $favorite->item->id]) }}" method="POST" style="display: inline;">
                         @csrf

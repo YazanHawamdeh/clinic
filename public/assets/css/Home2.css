@@ -210,7 +210,7 @@ margin-right: 20px;
   
   .feature-box {
     border-right: #eaeaea solid 2px;
-  
+  padding: 20px;
    
   }
   .feature-box:last-child{
@@ -273,8 +273,9 @@ width: 90%;
 }
 
 .product-image img {
-    max-width: 70%;
+    width: 70%;
     height: 11rem;
+    object-fit: cover;
     
 }
 .product-actions{

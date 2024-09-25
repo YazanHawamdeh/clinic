@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,54 +16,61 @@
     @include('home.navbar')
 
     <div class="container product-page mt-5">
-        <div class="row">
-            <!-- Left Side: Product Image -->
-            <div class="col-md-6 product-image mt-3">
-                <h2>Shopping Cart</h2>
+    <div class="row">
+        <!-- Left Side: Product Image -->
+        <div class="col-md-6 product-image mt-3">
+            <h2>Shopping Cart</h2>
 
-                @foreach($cartItems as $item)
-                <div class="cart-item">
+            @php
+                $uniqueItems = [];
+            @endphp
+
+            @foreach($cartItems as $item)
+                @if(!in_array($item->id, $uniqueItems))
+                    @php
+                        $uniqueItems[] = $item->id;
+                    @endphp
+
+                    <div class="cart-item">
                         <img src="{{ asset($item->image) }}" alt="Product Image" class="product-img">
- 
+                        <div class="item-details">
+                            <p class="product-name">{{ $item->item_title }}</p>
+                            <p class="points">{{ $item->points }} Points</p>
+                            <p class="price">{{ number_format($item->price, 2) }} SAR</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn decrement-btn" data-id="{{ $item->id }}">-</button>
+                            <input type="number" value="{{ $item->quantity }}" min="1" class="quantity-input" data-id="{{ $item->id }}">
+                            <button class="quantity-btn increment-btn" data-id="{{ $item->id }}">+</button>
+                        </div>
 
-                    <div class="item-details">
-                        <p class="product-name">{{ $item->item_title }}</p>
-                        <p class="points">{{ $item->points }} Points</p>
-                        <p class="price">{{ number_format($item->price, 2) }} SAR</p>
-                    </div>
-                    <div class="item-quantity">
-                        <button class="quantity-btn decrement-btn" data-id="{{ $item->id }}">-</button>
-                        <input type="number" value="{{ $item->quantity }}" min="1" class="quantity-input" data-id="{{ $item->id }}">
-                        <button class="quantity-btn increment-btn" data-id="{{ $item->id }}">+</button>
-                    </div>
-
-                    <form action="{{ route('remove_cart', ['id' => $item->id]) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="remove-btn rounded-circle">×</button>
-                    </form>
-                </div>
-                @endforeach
-
-            </div>
-
-            <!-- Right Side: Order Summary -->
-            <div class="col-md-6 product-details mt-3">
-                <h2>Order Summary</h2>
-                <p class="mt-4 mb-3">Sub Total <span class="subtotal-amount amount">{{ number_format($cartItems->sum('price'), 2) }} SAR</span></p>
-                <p>Delivery <span class="delivery-amount amount">20.00 SAR</span></p>
-                <hr>
-                <p class="mb-3 Total">Total <span class="total-amount">{{ number_format($cartItems->sum('price') + 20, 2) }} SAR</span></p>
-                <p class="Total-points">Total Points Earned <span class="points-earned">{{ $cartItems->sum('points') }}</span></p>
-                <!-- <button class="submit-order">Submit Order</button> -->
-                <form action="{{ route('checkout') }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('post')
-                        <button type='submit' class="submit-order">Submit Order</button>
+                        <form action="{{ route('remove_cart', ['id' => $item->id]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="remove-btn rounded-circle">×</button>
                         </form>
-            </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+
+        <!-- Right Side: Order Summary -->
+        <div class="col-md-6 product-details mt-3">
+            <h2>Order Summary</h2>
+            <p class="mt-4 mb-3">Sub Total <span class="subtotal-amount amount">{{ number_format($cartItems->sum('price'), 2) }} SAR</span></p>
+            <p>Delivery <span class="delivery-amount amount">20.00 SAR</span></p>
+            <hr>
+            <p class="mb-3 Total">Total <span class="total-amount">{{ number_format($cartItems->sum('price') + 20, 2) }} SAR</span></p>
+            <p class="Total-points">Total Points Earned <span class="points-earned">{{ $cartItems->sum('points') }}=({{ $cartItems->sum('points') / $conversionRate }} dollars)</span></p>
+            <form action="{{ route('checkout') }}" method="POST" style="display:inline;">
+                @csrf
+                @method('post')
+                <button type='submit' class="submit-order">Submit Order</button>
+            </form>
         </div>
     </div>
+</div>
+
 
     @include('home.footer')
 
@@ -73,13 +79,13 @@
     <script src="order.js"></script>
 </body>
 
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const incrementButtons = document.querySelectorAll('.increment-btn');
     const decrementButtons = document.querySelectorAll('.decrement-btn');
     const subtotalElement = document.querySelector('.subtotal-amount');
     const totalElement = document.querySelector('.total-amount');
+    const pointsEarnedElement = document.querySelector('.points-earned');
     const deliveryAmount = 20;  
 
     function updateTotal() {
@@ -101,31 +107,29 @@
 
         subtotalElement.textContent = subtotal.toFixed(2) + ' SAR';
         totalElement.textContent = (subtotal + deliveryAmount).toFixed(2) + ' SAR';
-        document.querySelector('.points-earned').textContent = pointsEarned;
+        pointsEarnedElement.textContent = pointsEarned + '= (' + (pointsEarned / {{ $conversionRate }}).toFixed(2) + ' dollars)';
     }
 
     function updateQuantityInBackend(itemId, newQuantity) {
-    fetch("{{ route('update_cart') }}", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({
-            id: itemId,
-            quantity: newQuantity
+        fetch("{{ route('update_cart') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                id: itemId,
+                quantity: newQuantity
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Optionally update the item's price or total
-            updateTotal();
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateTotal();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
     incrementButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -145,87 +149,21 @@
             let quantity = parseInt(quantityInput.value);
             if (quantity > 1) {
                 quantityInput.value = --quantity;
-
                 updateQuantityInBackend(itemId, quantity);
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const itemId = input.getAttribute('data-id');
+            const newQuantity = parseInt(input.value);
+            if (newQuantity > 0) {
+                updateQuantityInBackend(itemId, newQuantity);
             }
         });
     });
 
     updateTotal();
 });
-
-
-$('.quantity-input').on('change', function() {
-    let cartItemId = $(this).data('id'); // Get the item's ID
-    let quantity = $(this).val(); // Get the new quantity
-
-    $.ajax({
-        url: `/update_quantity/${cartItemId}`,
-        type: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            quantity: quantity
-        },
-        success: function(response) {
-            if (response.success) {
-                $(`#item-total-${cartItemId}`).text(response.newPrice.toFixed(2)); // Update total
-                updateTotal();
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-        }
-    });
-});
-
-
-
-
-
-fetch("{{ route('update_cart') }}", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    },
-    body: JSON.stringify({
-        id: itemId,
-        quantity: newQuantity
-    })
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();  // Ensure JSON is returned
-})
-.then(data => {
-    if (data.success) {
-        updateTotal();
-    } else {
-        console.error('Update failed');
-    }
-})
-.catch(error => console.error('Error:', error));
-
-
-
-function addToCart(itemId) {
-    let quantity = $('.quantity-input').val();
-
-    $.ajax({
-        url: '/add_to_cart/' + itemId,
-        type: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            quantity: quantity
-        },
-        success: function(response) {
-            // Show success toast message
-            $('#cartToast').toast('show');
-        }
-    });
-}
-
-
 </script>

@@ -69,7 +69,6 @@ public function delete_user($id) {
 
 // ================================================================== index login function
 
-
 public function index() {
 
     $usertype=Auth::user()->userType;
@@ -78,6 +77,7 @@ public function index() {
     $banner = Banner::findOrFail(1);
     $relatedLink = RelatedLinks::all();
     $items = Item::orderBy('created_at', 'desc')->take(4)->get();
+    $cartCount = Cart::count(); // Get the number of items in the cart
 
 
 
@@ -87,7 +87,7 @@ public function index() {
 
         return view('admin.forms.index');
     }else{
-        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink','cartCount'));
     }
 }
 // ========================================================================

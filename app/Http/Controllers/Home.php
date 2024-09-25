@@ -17,6 +17,8 @@ use App\Models\Order;
 use App\Models\RelatedLinks;
 use App\Models\Item;
 use App\Models\Favorite;
+use App\Models\ConversionRate;
+
 
 
 
@@ -290,6 +292,22 @@ public function related_link_view()
     return view('admin.forms.addRelated'); // Return the view with the form
 }
 
+
+public function delete_relatedLink($id)
+{
+    $relatedLink = RelatedLinks::find($id);
+
+    if ($relatedLink) {
+        // Delete the related link from the database
+        $relatedLink->delete();
+
+        return response()->json(['success' => true, 'message' => 'Related link deleted successfully.']);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Related link not found.'], 404);
+}
+
+
 public function add_related_link(Request $request)
 {
     // Validate the request for multiple entries
@@ -361,27 +379,43 @@ public function add_cart(Request $request, $id) {
     if (Auth::id()) {
         $user = Auth::user();
         $item = Item::find($id);
-        $cart = new Cart;
 
-        $cart->name = $user->name;
-        $cart->email = $user->email;
-        $cart->phone = $user->phone;
-        $cart->address = $user->address;
-        $cart->user_id = $user->id;
-        $cart->item_title = $item->name;
-        $cart->price = $item->price * $request->quantity;
-        $cart->item_id = $item->id;
-        $cart->quantity = $request->quantity;
+        // Check if the item already exists in the cart for this user
+        $existingCartItem = Cart::where('user_id', $user->id)
+                                ->where('item_id', $id)
+                                ->first();
 
-        // Fetch and save the first image from imagesItem
-        $firstImage = $item->images->first(); // Assuming the relation is defined
-        $cart->image = $firstImage ? $firstImage->image_url : null; // Ensure correct field is used
+        if ($existingCartItem) {
+            // If the item exists, you can update the quantity or just return a message
+            $existingCartItem->quantity += $request->quantity;
+            $existingCartItem->price = $item->price * $existingCartItem->quantity;
+            $existingCartItem->save();
 
-        $cart->save();
+            return redirect()->back()->with('message', 'Item quantity updated in your cart.');
+        } else {
+            // If the item doesn't exist, create a new cart entry
+            $cart = new Cart;
+            $cart->name = $user->name;
+            $cart->email = $user->email;
+            $cart->phone = $user->phone;
+            $cart->address = $user->address;
+            $cart->user_id = $user->id;
+            $cart->item_title = $item->name;
+            $cart->price = $item->price * $request->quantity;
+            $cart->item_id = $item->id;
+            $cart->quantity = $request->quantity;
+            $cart->points = $item->points;
 
-        return redirect()->back();
+            // Fetch and save the first image from imagesItem
+            $firstImage = $item->images->first(); // Assuming the relation is defined
+            $cart->image = $firstImage ? $firstImage->image_url : null; // Ensure correct field is used
+
+            $cart->save();
+
+            return redirect()->back()->with('message', 'Item added to your cart.');
+        }
     } else {
-        return redirect('login');
+        return redirect('login')->with('message', 'Please log in to add items to your cart.');
     }
 }
 
@@ -468,8 +502,10 @@ public function show_cart() {
     if (Auth::check()) {
         $user = Auth::user();
         $cartItems = Cart::where('user_id', $user->id)->get();
+        $conversionRate = ConversionRate::first()->conversion_rate;
 
-        return view('home.order.order', compact('cartItems'));
+
+        return view('home.order.order', compact('cartItems','conversionRate'));
     } else {
         return redirect('login');
     }
@@ -499,12 +535,17 @@ public function checkout()
     $totalPrice = $cartItems->sum(function ($item) {
         return $item->price * $item->quantity;
     });
-
+    // Calculate total price
+    $totalPoints = $cartItems->sum(function ($item) {
+        return $item->points;
+    });
     // Save the order
     $order = Order::create([
         'user_id' => $user->id,
         'total_price' => $totalPrice,
         'items' => $cartItems->toJson(),
+        'total_points' => $totalPoints,
+
     ]);
 
     // Clear the cart
@@ -680,8 +721,10 @@ public function checkout()
         $aboutUs = AboutUs::findOrFail(1);
         $banner = Banner::findOrFail(1);
         $relatedLink = RelatedLinks::all();
+        $cartCount = Cart::count(); // Get the number of items in the cart
+      
 
-        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink','cartCount'));
     }
 
 
@@ -702,5 +745,12 @@ public function checkout()
     //         'phone' => 'The provided credentials do not match our records.',
     //     ]);
     // }
+
+    public function showNavbar()
+{
+    $cartCount = Cart::count(); // Get the number of items in the cart
+    return view('navbar', compact('cartCount'));
+}
+
 
 }

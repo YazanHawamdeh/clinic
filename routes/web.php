@@ -85,6 +85,8 @@ Route::get('/shop', [Home::class, 'shop'])->name('shop');
 
 Route::get('/edit_related_link', [Home::class, 'edit_related_link'])->name('edit_related_link');
 Route::post('/update_related_link', [Home::class, 'update_related_link'])->name('update_related_link');
+Route::delete('/related-link/{id}', [home::class, 'delete_relatedLink'])->name('delete_relatedLink');
+
 
 // Route::post('/updateItem/{id}', [Admin::class, 'updateItem']);
 // route::get('/delete_item/{id}', [Admin::class, 'delete_item']);

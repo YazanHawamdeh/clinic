@@ -78,7 +78,7 @@
                         <th>Order ID</th>
                         <th>User ID</th>
                         <th>Total Price</th>
-                        <th>Items</th>
+                        <!-- <th>Items</th> -->
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -88,7 +88,7 @@
                         <th>Order ID</th>
                         <th>User ID</th>
                         <th>Total Price</th>
-                        <th>Items</th>
+                        <!-- <th>Items</th> -->
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -99,26 +99,27 @@
             <td>{{ $order->id }}</td>
             <td>{{ $order->user_id }}</td>
             <td>${{ $order->total_price }}</td>
-            <td>
+            <!-- <td>${{ $order->total_points }}</td> -->
+
+            <!-- <td>
                 <ul>
                     @foreach (json_decode($order->items) as $item)
-                        <li>{{ $item->item_title }} <!-- - {{ $item->quantity }} x ${{ $item->price }} --></li>
+                        <li>{{ $item->item_title }}</li>
                         
-                        <!-- Assuming $item->id corresponds to the Item model -->
-                        @php
+\                        @php
                             $itemModel = \App\Models\Item::find($item->id);
                         @endphp
                         
                         @if($itemModel)
                             <div class="item-images">
-                                @foreach($itemModel->images as $image) <!-- Assuming $itemModel->images is the relation -->
+                                @foreach($itemModel->images as $image) 
                                     <img src="{{ asset($image->image_url) }}" alt="{{ $item->item_title }}" width="50" height="50">
                                 @endforeach
                             </div>
                         @endif
                     @endforeach
                 </ul>
-            </td>
+            </td> -->
             <td>{{ $order->created_at }}</td>
             <td>
             <a href="javascript:void(0)" class="btn btn-link btn-primary" title="View" onclick="viewOrder({{ $order->id }})">
@@ -189,18 +190,18 @@
 
 
         function viewOrder(orderId) {
-    $.ajax({
-        url: '/get_order_details/' + orderId, // Adjust to your route for fetching order details
-        method: 'GET',
-        success: function(response) {
-            $('#modal-body-content').html(response); // Load the response into the modal body
-            $('#orderModal').modal('show'); // Show the modal
-        },
-        error: function() {
-            Swal.fire('Error', 'Unable to load order details. Please try again later.', 'error');
+            $.ajax({
+                url: '/get_order_details/' + orderId, 
+                method: 'GET',
+                success: function(response) {
+                    $('#modal-body-content').html(response); 
+                    $('#orderModal').modal('show'); 
+                },
+                error: function() {
+                    Swal.fire('Error', 'Unable to load order details. Please try again later.', 'error');
+                }
+            });
         }
-    });
-}
 
     </script>
 </body>

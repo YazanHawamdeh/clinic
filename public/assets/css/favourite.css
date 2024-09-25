@@ -206,7 +206,7 @@ width: 1150px;
 }
 
 .product-image img {
-    max-width: 70%;
+    width: 70%;
     height: 11rem;
     object-fit: cover;
     
@@ -257,7 +257,9 @@ width: 1150px;
    
 }
     
-   
+.addToCardBtn{
+    width: 30px;
+  }
 .footer {
 
     background-color: #0B3D3B;

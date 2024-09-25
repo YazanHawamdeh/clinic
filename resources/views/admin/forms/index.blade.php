@@ -115,9 +115,9 @@
                       <!-- <a href="{{route('view-items')}}">
                         <span class="sub-item">All Items</span>
                       </a> -->
-                      <a href="{{route('newBannerPage')}}">
+                      <!-- <a href="{{route('newBannerPage')}}">
                         <span class="sub-item">Add Banner</span>
-                      </a>
+                      </a> -->
                       <a href="{{route('editUpdateBanner', 1)}}">
                         <span class="sub-item">update Banner</span>
                       </a>

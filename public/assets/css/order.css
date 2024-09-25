@@ -28,7 +28,7 @@ color: #37657c;
  .search-icon{
     background-color: #EFEFEF;
     margin-top: 5px;
-    padding: 3px 10px;
+    padding: 10px 10px !important;
 }
 .search-bar {
     display: none;
@@ -63,7 +63,7 @@ color: #37657c;
 .nav-icons{
     background-color: #EFEFEF;
     margin-top: 5px;
-    padding: 3px 10px;
+    padding: 10px 10px;
     margin-left: -15px;
 }
 .nav-item img{

@@ -39,7 +39,7 @@
             </div>
           
 
-            <div class="about-container mt-5 mb-2   ">
+            <div class="about-container mt-5 mb-2" id='about'>
              
                 <h2>{{$aboutUs->title}}</h2>
                 <p>{{$aboutUs->description}}</p>
@@ -149,7 +149,7 @@
 </script>
 
         
-      <section class="overlay-section">
+      <section class="overlay-section" id='contact'>
         <img src="{{ asset('assets/imgshome/Union 31.png') }}" alt="Background Image" class="background-image">
         
         <!-- Content to be overlaid -->
