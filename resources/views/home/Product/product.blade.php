@@ -28,11 +28,13 @@
                 <div class="carousel">
                     <button class="carousel-control-prev"><</button>
                     @foreach($item->images as $image)
-                        <img src="{{ asset($image->image_url) }}" alt="Product Thumbnail" class="img-thumbnail sliderProductDetails">
+                        <img src="{{ asset($image->image_url) }}" alt="Product Thumbnail" class="img-thumbnail active-thumbnail sliderProductDetails">
                     @endforeach
+
                     <button class="carousel-control-next">></button>
                 </div>
             </div>
+            
         
         <!-- Right Side: Product Details -->
         <div class="col-md-6 product-details">
@@ -51,10 +53,10 @@
             </a>
  
             <form onsubmit="event.preventDefault(); updateCartCount();addToCart({{ $item->id }});" method="POST" style="display: inline;">
-    @csrf
-    <input type="hidden" class="badge" name="quantity" value="{{ $item->quantity ? $item->quantity : 1 }}">
-    <button class="btn Cart add-to-cart-btn">Add to Cart</button>
-</form>
+                @csrf
+                <input type="hidden" class="badge" name="quantity" value="{{ $item->quantity ? $item->quantity : 1 }}">
+                <button class="btn Cart add-to-cart-btn">Add to Cart</button>
+            </form>
 
             </div>
             <!-- <div class="toast-container mt-3">

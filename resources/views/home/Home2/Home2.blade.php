@@ -150,7 +150,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="carousel-image-container">
-                            <img src="{{ asset('assets/imgshome/jaw2.png') }}" alt="Related Image" class="img-fluid carousel-image">
+                            <img src="{{ asset('storage/' . $link->image) }}" alt="Related Image" class="img-fluid carousel-image">
                             </div>
                         </div>
                         <div class="col-md-6">
