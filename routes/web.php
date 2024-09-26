@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 route::get('/index', [Admin::class, 'index'])->name('index');
 route::get('/', [Admin::class, 'home'])->name('home');
 
+Route::get('/cart/count', [Home::class, 'getCartCount'])->name('cart.count');
 
 
 

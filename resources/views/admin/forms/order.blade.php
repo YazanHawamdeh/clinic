@@ -154,9 +154,9 @@
             <div class="modal-body" id="modal-body-content">
                 <!-- Order details will be loaded here via AJAX -->
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

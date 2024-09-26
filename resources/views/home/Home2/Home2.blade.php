@@ -71,36 +71,37 @@
 
     <section class="features-section py-4">
     <div class="row text-center justify-content-center">
-            <div class="col-md-4 feature-box">
-              <!-- <img src="imgs/book.svg" alt="Efficient Ordering Process" class="feature-icon mb-3"> -->
-              <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-              <h4 class="feature-title">{{$aboutUs->title_box_1}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_1}}              </p>
-            </div>
-            <div class="col-md-4 feature-box">
-            <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-            <h4 class="feature-title">{{$aboutUs->title_box_2}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_2}}              </p>
-              </p>
-            </div>
-            <div class="col-md-4 feature-box">
-            <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-            <h4 class="feature-title">{{$aboutUs->title_box_3}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_3}}              </p>
-            </div>
-          </div>
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_1) }}" alt="Image Box 1" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_1 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_1 }}
+            </p>
         </div>
-      </section>
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_2) }}" alt="Image Box 2" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_2 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_2 }}
+            </p>
+        </div>
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_3) }}" alt="Image Box 3" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_3 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_3 }}
+            </p>
+        </div>
+    </div>
+</section>
+
 
       <section class="featured-products py-5 mb-3">
     <div class="container">
         <h2 class="text-center mb-5">Featured <strong>Products</strong></h2>
         <div class="row">
             @foreach($items as $item)
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
                 <a href="{{ route('product', ['id' => $item->id]) }}" class="d-block">
                     <div class="product-card">
                         <div class="product-image">
@@ -120,7 +121,7 @@
                                 <form onsubmit="event.preventDefault(); addToCart({{ $item->id }});" method="POST" style="display: inline;">
                                     @csrf
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" style="border: none; background: none; padding: 0;" class="icon-card-home">
+                                    <button type="submit" style="border: none; background: none; padding: 0;" class="add-to-cart-btn icon-card-home">
                                         <img src="{{ asset('assets/imgshome/Group 1274.svg') }}" alt="Add to Cart" class="addToCardBtn" id='add-to-cart-button'>
                                     </button>
                                 </form>
@@ -280,5 +281,27 @@ function addToCart(itemId) {
         }
     });
 }
+
+
+function updateCartCount() {
+    $.ajax({
+        url: '{{ route("cart.count") }}', 
+        type: 'GET',
+        success: function (data) {
+            $('.badge').text(data.cartCount);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+$('.add-to-cart-btn').click(function() {
+    updateCartCount(); 
+});
+
+$('.remove-from-cart-btn').click(function() {
+    updateCartCount();  
+});
 
 </script>

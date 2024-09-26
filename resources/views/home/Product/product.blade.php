@@ -22,23 +22,7 @@
 
     <div class="container product-page mt-5">
     <div class="row w-100">
-        <!-- Left Side: Product Image -->
-        <!-- <div class="col-md-6 product-image mt-5">
-            <img src="{{ asset($item->images->first()->image_url ?? 'default-image.png') }}" alt="Product Image" class="img-fluid">
-            <div class="carousel">
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>  
-                      @foreach($item->images as $image)
-                    <img src="{{ asset($image->image_url) }}" alt="Product Thumbnail" class="img-thumbnail">
-                @endforeach
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button> 
-               </div>
-        </div> -->
+
         <div class="col-md-6 product-image mt-5 ">
                 <img src="imgs/dentalstaff2.png" alt="Product Image" class="img-fluid main-image-slider">
                 <div class="carousel">
@@ -65,12 +49,13 @@
             <a href="javascript:void(0)" class="me-2" onclick="addToFavorite({{ $item->id }})">
             <button class="btn Favourite">Favourite</button>
             </a>
-            <form onsubmit="event.preventDefault(); addToCart({{ $item->id }});" method="POST" style="display: inline;">
-                                    @csrf
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button class="btn Cart">Add to Cart</button>
-            </form>
-               
+ 
+            <form onsubmit="event.preventDefault(); updateCartCount();addToCart({{ $item->id }});" method="POST" style="display: inline;">
+    @csrf
+    <input type="hidden" class="badge" name="quantity" value="{{ $item->quantity ? $item->quantity : 1 }}">
+    <button class="btn Cart add-to-cart-btn">Add to Cart</button>
+</form>
+
             </div>
             <!-- <div class="toast-container mt-3">
                 <div id="cartToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -109,85 +94,6 @@
 <script>
 
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const incrementButtons = document.querySelectorAll('.increment-btn');
-//     const decrementButtons = document.querySelectorAll('.decrement-btn');
-//     const subtotalElement = document.querySelector('.subtotal-amount');
-//     const totalElement = document.querySelector('.total-amount');
-//     const deliveryAmount = 20;  
-
-//     function updateTotal() {
-//         let subtotal = 0;
-//         let total = 0;
-//         let pointsEarned = 0;
-
-//         document.querySelectorAll('.cart-item').forEach(item => {
-//             const quantityInput = item.querySelector('.quantity-input');
-//             const priceElement = item.querySelector('.price');
-//             const pointsElement = item.querySelector('.points');
-//             const price = parseFloat(priceElement.textContent.replace(' SAR', ''));
-//             const points = parseInt(pointsElement.textContent);
-//             const quantity = parseInt(quantityInput.value);
-
-//             subtotal += price * quantity;
-//             pointsEarned += points * quantity;
-//         });
-
-//         subtotalElement.textContent = subtotal.toFixed(2) + ' SAR';
-//         totalElement.textContent = (subtotal + deliveryAmount).toFixed(2) + ' SAR';
-//         document.querySelector('.points-earned').textContent = pointsEarned;
-//     }
-
-//     function updateQuantityInBackend(itemId, newQuantity) {
-//     fetch("{{ route('update_cart') }}", {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'X-CSRF-TOKEN': '{{ csrf_token() }}'
-//         },
-//         body: JSON.stringify({
-//             id: itemId,
-//             quantity: newQuantity
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success) {
-//             // Optionally update the item's price or total
-//             updateTotal();
-//         }
-//     })
-//     .catch(error => console.error('Error:', error));
-// }
-
-
-//     incrementButtons.forEach(button => {
-//         button.addEventListener('click', function() {
-//             const itemId = button.getAttribute('data-id');
-//             const quantityInput = document.querySelector(`.quantity-input[data-id='${itemId}']`);
-//             let quantity = parseInt(quantityInput.value);
-//             quantityInput.value = ++quantity;
-
-//             updateQuantityInBackend(itemId, quantity);
-//         });
-//     });
-
-//     decrementButtons.forEach(button => {
-//         button.addEventListener('click', function() {
-//             const itemId = button.getAttribute('data-id');
-//             const quantityInput = document.querySelector(`.quantity-input[data-id='${itemId}']`);
-//             let quantity = parseInt(quantityInput.value);
-//             if (quantity > 1) {
-//                 quantityInput.value = --quantity;
-
-//                 updateQuantityInBackend(itemId, quantity);
-//             }
-//         });
-//     });
-
-//     updateTotal();
-// });
-
 
 function addToFavorite(itemId) {
     $.ajax({
@@ -217,14 +123,17 @@ function addToFavorite(itemId) {
 
 
 function addToCart(itemId) {
+    let quantity = document.querySelector('.quantity-input').value;  // Get the quantity value
+
     $.ajax({
         url: '{{ route('add_cart', ['id' => ':id']) }}'.replace(':id', itemId),
         type: 'POST',
         data: {
             _token: '{{ csrf_token() }}',
-            quantity: 1
+            quantity: quantity  // Pass the quantity to the backend
         },
         success: function(response) {
+            updateCartCount();
             Swal.fire({
                 title: 'Success!',
                 text: response.message || 'Item added to cart',
@@ -242,6 +151,7 @@ function addToCart(itemId) {
         }
     });
 }
+
 
 
 
@@ -355,6 +265,7 @@ incrementBtn.addEventListener('click', () => {
 //     const toast = new bootstrap.Toast(cartToast);
 //     toast.show();
 // });
+// Function to update cart count without reloading the page
 
 </script>
 
@@ -365,3 +276,31 @@ incrementBtn.addEventListener('click', () => {
 
 
 
+
+<script>
+    function updateCartCount() {
+    $.ajax({
+        url: '{{ route("cart.count") }}', // A new route to fetch cart count
+        type: 'GET',
+        success: function (data) {
+            // Update the cart count badge
+            $('.badge').text(data.cartCount);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+$('.add-to-cart-btn').click(function() {
+    // Your logic to add the item to the cart
+    updateCartCount();  // Call the function to update the count
+});
+
+$('.remove-from-cart-btn').click(function() {
+    // Your logic to remove the item from the cart
+    updateCartCount();  // Call the function to update the count
+});
+
+</script>

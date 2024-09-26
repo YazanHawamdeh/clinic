@@ -83,19 +83,22 @@
                             </svg>
                         </a>
                     </li>
-<li class="nav-item position-relative">
-    <a href="{{ route('show_cart') }}" class="btn nav-icons rounded-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-bag-fill" viewBox="0 0 16 16">
-            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
-        </svg>
-        <!-- Cart Badge -->
-        <!-- @if($cartCount > 0) -->
-            <span class="badge position-absolute top-0 start-100 translate-middle bg-danger rounded-pill">
-                {{ $cartCount }}
-            </span>
-        <!-- @endif -->
-    </a>
-</li>
+                    <li class="nav-item position-relative">
+                        <a href="{{ route('show_cart') }}" class="btn nav-icons rounded-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
+                            </svg>
+                            <!-- Cart Badge -->
+                            @if($cartCount > 0)
+                                <span class="badge position-absolute top-0 start-75 translate-middle bg-danger rounded-pill">
+                                    {{ $cartCount }}
+                                </span>
+                                @else
+                                <span class="badge position-absolute top-0 start-75 translate-middle bg-danger rounded-pill">0</span>
+
+                            @endif
+                        </a>
+                    </li>
 
                     <!-- <li>
                         <form method="POST" action="{{ route('logout') }}">
@@ -143,3 +146,29 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+    function updateCartCount() {
+    $.ajax({
+        url: '{{ route("cart.count") }}', // A new route to fetch cart count
+        type: 'GET',
+        success: function (data) {
+            // Update the cart count badge
+            $('.badge').text(data.cartCount);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+$('.add-to-cart-btn').click(function() {
+    // Your logic to add the item to the cart
+    updateCartCount();  // Call the function to update the count
+});
+
+$('.remove-from-cart-btn').click(function() {
+    // Your logic to remove the item from the cart
+    updateCartCount();  // Call the function to update the count
+});
+
+</script>

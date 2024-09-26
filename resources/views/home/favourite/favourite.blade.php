@@ -53,6 +53,7 @@
         @forelse ($favorites as $favorite)
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="product-card">
+            <a href="{{ route('product', ['id' => $favorite->item->id]) }}">
             <div class="product-image">
                 <span class="product-points">{{ $favorite->item->points }} Points</span>
                 @if($favorite->item->images->isNotEmpty())
@@ -67,7 +68,7 @@
                 <p class="product-price mt-1">{{ $favorite->item->price }} SAR</p>
                 <div class="product-actions">
                     <a href="javascript:void(0)" class="me-2" onclick="removeFromFavorite({{ $favorite->item->id }})">
-                        <img src="{{ asset('assets/imgshome/removeFav.svg') }}" alt="Remove from favorite" class='addToCardBtn'>
+                        <img src="{{ asset('assets/imgshome/removeFav.svg') }}" alt="Remove from favorite">
                     </a>
                     <form action="{{ route('add_cart', ['id' => $favorite->item->id]) }}" method="POST" style="display: inline;">
                         @csrf
@@ -78,6 +79,7 @@
                     </form>
                 </div>
             </div>
+            </a>
         </div>
     </div>
 @empty
@@ -147,5 +149,9 @@ function removeFromFavorite(itemId) {
    
  
 </body>
-
+<style>
+  a{
+    text-decoration:none !important
+  }
+</style>
 </html>

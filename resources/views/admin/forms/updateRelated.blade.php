@@ -57,7 +57,7 @@
                     </div>
                     
                     <div class="col-md-12 col-lg-12">
-                        <button type="button" class="btn btn-danger" onclick="deleteCard({{ $relatedLink->id }})">Remove Card</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteCard({{ $relatedLink->id }})">Remove</button>
                     </div>
                 </div>
             </div>

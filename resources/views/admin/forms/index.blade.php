@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin Page</title>
+    <title>dashboard</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -82,7 +82,7 @@
 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
-                  <i class="fas fa-layer-group"></i>
+                  <i class="fas fa-table"></i>
                   <p>Items</p>
                   <span class="caret"></span>
                 </a>
@@ -105,7 +105,7 @@
 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base2">
-                  <i class="fa fa-heart "></i>
+                  <i class="fa fa-home "></i>
                   <p>Banner</p>
                   <span class="caret"></span>
                 </a>
@@ -175,7 +175,7 @@
 
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base4">
-                  <i class="fas fa-layer-group"></i>
+                  <i class="fas fa-credit-card"></i>
                   <p>Order</p>
                   <span class="caret"></span>
                 </a>
@@ -183,7 +183,7 @@
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{{route('order')}}">
-                        <span class="sub-item">order</span>
+                        <span class="sub-item"> All Orders</span>
                       </a>
                     </li>
 
@@ -196,7 +196,7 @@
               
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base6">
-                  <i class="fas fa-layer-group"></i>
+                  <i class="fas fa-bars"></i>
                   <p>Related Link</p>
                   <span class="caret"></span>
                 </a>
@@ -215,13 +215,13 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="">
                   <i class="fas fa-layer-group"></i>
                   <p>Logo</p>
                 </a>
 
-              </li>
+              </li> -->
 
               
 
@@ -505,7 +505,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                           @csrf
       
-                          <x-responsive-nav-link :href="route('logout')"
+                          <x-responsive-nav-link :href="route('index')"
                                   onclick="event.preventDefault();
                                               this.closest('form').submit();">
                               {{ __('Log Out') }}

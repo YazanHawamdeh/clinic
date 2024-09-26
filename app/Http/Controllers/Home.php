@@ -203,7 +203,7 @@ class Home extends Controller
         'title' => 'required|string|max:255',
         'description' => 'required|string',
         'images' => 'array|nullable|max:4',
-        'images.*' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+        'images.*' => 'file|mimes:jpeg,png,jpg,gif',
         'titleBox1' => 'nullable|string',
         'descriptionBox1' => 'nullable|string',
         'titleBox2' => 'nullable|string',
@@ -375,6 +375,7 @@ public function update_related_link(Request $request)
 }
 
 // =============================================================================================add_cart
+
 public function add_cart(Request $request, $id) {
     if (Auth::id()) {
         $user = Auth::user();
@@ -394,6 +395,7 @@ public function add_cart(Request $request, $id) {
             return redirect()->back()->with('message', 'Item quantity updated in your cart.');
         } else {
             // If the item doesn't exist, create a new cart entry
+          
             $cart = new Cart;
             $cart->name = $user->name;
             $cart->email = $user->email;
@@ -418,6 +420,22 @@ public function add_cart(Request $request, $id) {
         return redirect('login')->with('message', 'Please log in to add items to your cart.');
     }
 }
+
+
+public function getCartCount()
+{
+    if (Auth::check()) {
+        $userId = Auth::id();
+        
+        $cartCount = Cart::where('user_id', $userId)->count();
+
+        return response()->json(['cartCount' => $cartCount]);
+    } else {
+        return response()->json(['cartCount' => 0]);
+    }
+}
+
+
 
 
 public function updateCart(Request $request)
@@ -721,10 +739,9 @@ public function checkout()
         $aboutUs = AboutUs::findOrFail(1);
         $banner = Banner::findOrFail(1);
         $relatedLink = RelatedLinks::all();
-        $cartCount = Cart::count(); // Get the number of items in the cart
       
 
-        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink','cartCount'));
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }
 
 
@@ -746,11 +763,7 @@ public function checkout()
     //     ]);
     // }
 
-    public function showNavbar()
-{
-    $cartCount = Cart::count(); // Get the number of items in the cart
-    return view('navbar', compact('cartCount'));
-}
+
 
 
 }

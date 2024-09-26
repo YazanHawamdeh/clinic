@@ -14,6 +14,10 @@ use App\Models\ItemImage;
 use App\Models\AboutUs;
 use App\Models\Banner;
 use App\Models\RelatedLinks;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Storage;
+
+
 
 
 
@@ -69,6 +73,20 @@ public function delete_user($id) {
 
 // ================================================================== index login function
 
+// public function getCartCount()
+// {
+//     if (Auth::check()) {
+//         $userId = Auth::id();
+        
+//         $cartCount = Cart::where('user_id', $userId)->count();
+
+//         return response()->json(['cartCount' => $cartCount]);
+//     } else {
+//         return response()->json(['cartCount' => 0]);
+//     }
+// }
+
+
 public function index() {
 
     $usertype=Auth::user()->userType;
@@ -77,7 +95,6 @@ public function index() {
     $banner = Banner::findOrFail(1);
     $relatedLink = RelatedLinks::all();
     $items = Item::orderBy('created_at', 'desc')->take(4)->get();
-    $cartCount = Cart::count(); // Get the number of items in the cart
 
 
 
@@ -87,7 +104,7 @@ public function index() {
 
         return view('admin.forms.index');
     }else{
-        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink','cartCount'));
+        return view('home.Home2.Home2',compact('items','aboutUs','banner','relatedLink'));
     }
 }
 // ========================================================================
@@ -116,16 +133,15 @@ function newItemPage() {
 // ================================================================== add item
 
 
-public function add_item(Request $request) {
+public function add_item(Request $request)
+{
     // Validate the request
-
-
     $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required|string',
         'price' => 'required|numeric',
         'points' => 'required|integer',
-        'images.*' => 'file|mimes:jpeg,png,jpg,gif',
+        'images.*' => 'nullable|file|mimes:jpeg,png,jpg,gif', // Added 'nullable' for optional images
     ]);
 
     // Create a new item
@@ -141,12 +157,15 @@ public function add_item(Request $request) {
     // Handle file uploads
     if ($request->hasFile('images')) {
         foreach ($request->file('images') as $image) {
-            $imageName = $image->getClientOriginalName();
+            // Generate a unique file name for the image
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            // Store the image in the 'public/images' directory
             $image->storeAs('public/images', $imageName);
+            
             // Assuming you have an ItemImage model to store item images
             ItemImage::create([
                 'item_id' => $item->id,
-                'image_url' => 'storage/images/' . $imageName,
+                'image_url' => 'storage/images/' . $imageName, // Store the relative path
             ]);
         }
     }
@@ -154,6 +173,7 @@ public function add_item(Request $request) {
     // Return the view with a success message
     return redirect()->back()->with('message', 'Item added successfully');
 }
+
 
 
 // ================================================================== view items
@@ -215,18 +235,15 @@ public function delete_item($id) {
 
 // ================================================================== update Item
 
-
-
 public function updateItem(Request $request, $id)
 {
     // Validate the request
     $request->validate([
         'name' => 'required|string|max:255',
-        'description' => 'nullable|string', // Assuming description is optional
-        'price' => 'required|numeric|min:0',
-        'points' => 'required|integer|min:0',
-        'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate images
-
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'points' => 'required|integer',
+        'images.*' => 'nullable|file|mimes:jpeg,png,jpg,gif', // Allow null images
     ]);
 
     // Find the item
@@ -241,31 +258,40 @@ public function updateItem(Request $request, $id)
     $item->description = $request->input('description');
     $item->price = $request->input('price');
     $item->points = $request->input('points');
-    // if ($request->hasFile('images')) {
-    //     foreach ($item->images as $image) {
-    //         Item::delete('storage/images/' . basename($image->image_url));
-    //     }
-        
-    //     // Store new images
-    //     $imageUrls = [];
-    //     foreach ($request->file('images') as $image) {
-    //         $path = $image->store('storage/images');
-    //         $imageUrls[] = $path;
-    //     }
-        
-    //     $item->images()->delete(); 
-    //     foreach ($imageUrls as $url) {
-    //         $item->images()->create(['image_url' => $url]); 
-    //     }
-    // }
-    // $item->save();
 
+    // Handle file uploads and deletions
+    if ($request->hasFile('images')) {
+        // Delete old images from storage and database
+        foreach ($item->images as $image) {
+            // Delete the file from storage
+            if (Storage::exists($image->image_url)) {
+                Storage::delete($image->image_url);
+            }
+            // Delete the image record from the database
+            $image->delete();
+        }
+        
+        // Store new images
+        foreach ($request->file('images') as $image) {
+            // Generate a unique file name for the image
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            // Store the image in the 'public/images' directory
+            $image->storeAs('public/images', $imageName);
+            
+            // Save the new image URL in the database
+            ItemImage::create([
+                'item_id' => $item->id,
+                'image_url' => 'storage/images/' . $imageName, // Store the relative path
+            ]);
+        }
+    }
 
+    // Save the updated item details
+    $item->save();
 
     // Redirect with success message
     return redirect()->back()->with('success', 'Item updated successfully');
 }
-
 
 
 // ================================================================== update USer

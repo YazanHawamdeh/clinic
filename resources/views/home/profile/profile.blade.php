@@ -81,19 +81,19 @@
         
         <div class="d-grid gap-2">
             <button type="submit" class="btn submit mb-1">Update</button>
-            <button type="button" class="btn logout"> 
-                <img src="imgs/Group 4686.svg" alt="" class="me-2"><a href="{{ route('logout') }}">Logout</a>
+            <button class="btn logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <img src="imgs/Group 4686.svg" alt="" class="me-2">Logout
             </button>
+
         </div>
     </div>
 </form>
 
-<!-- <form method="POST" action="{{ route('logout') }}">
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
-    <button type="submit" class="btn logout">
-        {{ __('Logout') }}
-    </button>
-</form> -->
+</form>
+
                 </div>
             </div>
 

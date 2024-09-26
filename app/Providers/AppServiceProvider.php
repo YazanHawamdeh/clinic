@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 use App\Models\Cart;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -26,8 +29,25 @@ class AppServiceProvider extends ServiceProvider
 {
     // Share cart count across all views
     view()->composer('*', function ($view) {
-        $cartCount = Cart::count(); // Get cart item count
-        $view->with('cartCount', $cartCount);
+        if (Auth::check()) {
+        $userId = Auth::id();
+        
+        $cartCount = Cart::where('user_id', $userId)->count();
+         $view->with('cartCount', $cartCount);}
+         else return response()->json(['cartCount' => 0]);
     });
 }
+
+// public function getCartCount()
+// {
+//     if (Auth::check()) {
+//         $userId = Auth::id();
+        
+//         $cartCount = Cart::where('user_id', $userId)->count();
+
+//         return response()->json(['cartCount' => $cartCount]);
+//     } else {
+//         return response()->json(['cartCount' => 0]);
+//     }
+// }
 }

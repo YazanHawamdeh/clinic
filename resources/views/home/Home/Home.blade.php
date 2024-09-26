@@ -67,32 +67,31 @@
     </section>
 
 
-    <section class="features-section ">
-        <div class="container-fluid">
-          <div class="row text-center justify-content-center">
-            <div class="col-md-4 feature-box">
-              <!-- <img src="imgs/book.svg" alt="Efficient Ordering Process" class="feature-icon mb-3"> -->
-              <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-              <h4 class="feature-title">{{$aboutUs->title_box_1}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_1}}              </p>
-            </div>
-            <div class="col-md-4 feature-box">
-            <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-            <h4 class="feature-title">{{$aboutUs->title_box_2}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_2}}              </p>
-              </p>
-            </div>
-            <div class="col-md-4 feature-box">
-            <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Efficient Ordering Process" class="feature-icon mb-3">
-            <h4 class="feature-title">{{$aboutUs->title_box_3}}</h4>
-              <p class="feature-description">
-              {{$aboutUs->description_box_3}}              </p>
-            </div>
-          </div>
+    <section class="features-section py-4">
+    <div class="row text-center justify-content-center">
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_1) }}" alt="Image Box 1" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_1 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_1 }}
+            </p>
         </div>
-      </section>
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_2) }}" alt="Image Box 2" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_2 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_2 }}
+            </p>
+        </div>
+        <div class="col-md-4 feature-box">
+            <img src="{{ asset('storage/' . $aboutUs->image_box_3) }}" alt="Image Box 3" class="feature-icon mb-3">
+            <h4 class="feature-title">{{ $aboutUs->title_box_3 }}</h4>
+            <p class="feature-description">
+                {{ $aboutUs->description_box_3 }}
+            </p>
+        </div>
+    </div>
+</section>
 
 
 
